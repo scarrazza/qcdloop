@@ -1,3 +1,8 @@
+*~
+*.o
+*.a
+*.mod
+
 # Compiled Object files
 *.slo
 *.lo
@@ -26,3 +31,24 @@
 *.exe
 *.out
 *.app
+
+Makefile
+autom4te.cache/
+bin/Makefile
+bin/qcdloop-config
+config.log
+config.status
+doc/html/
+examples/.deps/
+examples/.libs/
+examples/Makefile
+examples/test
+libtool
+src/.deps/
+src/.libs/
+src/Makefile
+src/qcdloop/config.h
+src/qcdloop/stamp-h1
+examples/cache_test
+examples/cmass_test
+examples/trigger_test
