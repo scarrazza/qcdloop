@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+
+# These variables need to exist
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
+    echo
+    echo "qcdloop-config: configuration tool for qcdloop"
+    echo
+    echo "Usage: qcdloop-config [[--help|-h] | [--prefix] | [--ldflags]]"
+    echo "Options:"
+    echo "  --help | -h    : show this help message"
+    echo "  --prefix       : show the installation prefix (cf. autoconf)"
+    echo "  --incdir       : show the path to the qcdloop header directory (for C++ interface)"
+    echo "  --libdir       : show the path to the qcdloop library directory"
+    echo "  --cppflags     : get compiler flags for use with the C preprocessor stage of C++ compilation"
+    echo "  --ldflags      : get compiler flags for use with the linker stage of any compilation"
+    echo "  --version      : returns qcdloop release version number"
+fi
+
+OUT=""
+
+tmp=$( echo "$*" | egrep -- '--\<prefix\>')
+test -n "$tmp" && OUT="$OUT @prefix@"
+
+tmp=$( echo "$*" | egrep -- '--\<incdir\>')
+test -n "$tmp" && OUT="$OUT @includedir@"
+
+tmp=$( echo "$*" | egrep -- '--\<cppflags\>')
+test -n "$tmp" && OUT="$OUT -I@includedir@"
+
+tmp=$( echo "$*" | egrep -- '--\<libdir\>')
+test -n "$tmp" && OUT="$OUT @libdir@"
+
+tmp=$( echo "$*" | egrep -- '--\<ldflags\>')
+test -n "$tmp" && OUT="$OUT -L@libdir@ -lqcdloop -lquadmath -fext-numeric-literals -std=c++11"
+
+## Version
+tmp=$( echo "$*" | egrep -- '--\<version\>')
+test -n "$tmp" && OUT="$OUT @PACKAGE_VERSION@"
+
+echo $OUT
