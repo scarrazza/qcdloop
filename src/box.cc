@@ -951,7 +951,7 @@ namespace ql
             this->cLn(r14 - q13/x[1][0], -this->_one) +
             this->cLn((r12 - q24*x[1][3])/d, -cc);
 
-        cc = gamma*Sign(Real(r13)*Imag(r24)+ir24);
+        cc = gamma*Sign(Real(r13)*(Imag(r24)+ir24));
         l[0][1] = this->cLn(-x[0][1], -ix[0][1]) +
             this->cLn(r14 - q13/x[0][0], -this->_one) +
             this->cLn((r23 - q24*x[0][2])/d, cc);
