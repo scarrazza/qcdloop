@@ -27,7 +27,7 @@ namespace ql
     void integral(vector<TOutput> &res, TScale const& mu2, vector<TMass> const& m, vector<TScale> const& p);
 
     //! General case triangle integral I(p1,p2,p3;m1,m2,m3)
-    void T0(vector<TOutput> &res, TMass const (&xpi)[6]) const;
+    void T0(vector<TOutput> &res, TMass const (&xpi)[6], int const& massive) const;
 
     //! Divergent triangle integral I(0,0,p2;0,0,0)
     void T1(vector<TOutput> &res, TScale const& mu2, TScale const& p) const;
@@ -61,16 +61,19 @@ namespace ql
     void TIN0(TOutput &res, TMass const (&xpi)[6]) const;
 
     //! Calculation of triangle with p1sq=p2sq=0
-    void TIN1(TOutput &res, TMass const (&xpi)[6]) const;
+    void TIN1(TOutput &res, TMass const (&xpi)[6], TMass const (&sxpi)[6], int const& massive) const;
 
     //! Calculation of triangle with p1sq=0
-    void TIN2(TOutput &res, TMass const (&xpi)[6]) const;
+    void TIN2(TOutput &res, TMass const (&xpi)[6], TMass const (&sxpi)[6], int const& massive) const;
 
     //! Calculation of triangle with all p non-zero
-    void TIN3(TOutput &res, TMass const (&xpi)[6]) const;
+    void TIN3(TOutput &res, TMass const (&xpi)[6], TMass const (&sxpi)[6], int const& massive) const;
 
-    //! Calculation of triangle with all p non-zero
+    //! Calculation of triangle with all p and complex m non-zero
     void TINDNS(TOutput &res, TMass const (&xpi)[6]) const;
+
+    //! Calculation of triangle with 2 massive particles
+    void TINDNS2(TOutput &res, TMass const (&xpi)[6]) const;
 
     //! Calculate the kallen formula
     TOutput Kallen(TOutput const& p1, TOutput const& p2, TOutput const& p3) const;

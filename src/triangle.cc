@@ -178,9 +178,9 @@ namespace ql
         TriSort(psq, msq);
 
         // if internal masses all 0, reorder abs(psq) in ascending order
-        const bool iszeros[3] = {this->iszero(Abs(msq[0])),
-                                 this->iszero(Abs(msq[1])),
-                                 this->iszero(Abs(msq[2]))};
+        const bool iszeros[3] = {this->iszero(msq[0]),
+                                 this->iszero(msq[1]),
+                                 this->iszero(msq[2])};
 
         if (iszeros[0] && iszeros[1] && iszeros[2])
           SnglSort(psq);
@@ -198,18 +198,18 @@ namespace ql
         const TMass xpi[6] = { msq[0], msq[1], msq[2], TMass(psq[0]), TMass(psq[1]), TMass(psq[2]) };
 
         if (massive == 3)      // three internal masses
-          T0(this->_val, xpi);
+          T0(this->_val, xpi, massive);
         else if (massive == 2) // two internal masses
           {
             if (this->iszero(Abs(Y01)) && this->iszero(Abs(Y02)))
               T6(this->_val, musq, msq[1], msq[2], psq[1]);
             else
-              T0(this->_val, xpi);
+              T0(this->_val, xpi, massive);
           }
         else if (massive == 1) // one internal masses
-          {
+          {            
             if (!this->iszero(Abs(Y01)))
-              T0(this->_val, xpi);
+              T0(this->_val, xpi, massive);
             else if (this->iszero(Abs(Y02)) && this->iszero(Abs(Y12)))
               T5(this->_val, musq, msq[2]);
             else if (this->iszero(Abs(Y02)))
@@ -226,7 +226,7 @@ namespace ql
             else if (this->iszero(Abs(Y01)))
               T2(this->_val, musq, psq[1], psq[2]);
             else
-              T0(this->_val, xpi);
+              T0(this->_val, xpi, massive);
           }
 
         this->_val[0] /= scalefac;
@@ -247,7 +247,7 @@ namespace ql
    * \param xpi an array with masses and momenta squared.
    */
   template<typename TOutput, typename TMass, typename TScale>
-  void Triangle<TOutput,TMass,TScale>::T0(vector<TOutput> &res,TMass const (&xpi)[6]) const
+  void Triangle<TOutput,TMass,TScale>::T0(vector<TOutput> &res,TMass const (&xpi)[6], int const& massive) const
   {    
     // Set poles to zero
     res[1] = res[2] = this->_czero;
@@ -263,11 +263,11 @@ namespace ql
     if (zypi3 && zypi4 && this->iszero(ypi[5]))
       TIN0(res[0], ypi);
     else if (zypi3 && zypi4)
-      TIN1(res[0], ypi);
+      TIN1(res[0], ypi, xpi, massive);
     else if (zypi3)
-      TIN2(res[0], ypi);
+      TIN2(res[0], ypi, xpi, massive);
     else
-      TIN3(res[0], ypi);
+      TIN3(res[0], ypi, xpi, massive);
   }
 
   /*!
@@ -303,7 +303,7 @@ namespace ql
    * \param xpi an array with masses and momenta squared
    */
   template<typename TOutput, typename TMass, typename TScale>
-  void Triangle<TOutput,TMass,TScale>::TIN1(TOutput &res, TMass const (&xpi)[6]) const
+  void Triangle<TOutput,TMass,TScale>::TIN1(TOutput &res, TMass const (&xpi)[6], TMass const (&sxpi)[6], int const& massive) const
   {    
     if (this->iszero(Imag(xpi[0])) && this->iszero(Imag(xpi[1])) && this->iszero(Imag(xpi[2])))
       {
@@ -329,25 +329,33 @@ namespace ql
       }
     else
       {
-        if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero) // never happens with real momenta (but just in case..)
+        if (massive == 2)
+          TINDNS2(res, sxpi);
+        else if (massive == 1)
           {
-            const TOutput p2 = TOutput(xpi[5]);
-            TOutput m[3] = {TOutput(xpi[0]),TOutput(xpi[1]),TOutput(xpi[2])};
-
-            m[0] -= this->_ieps2*TOutput(Abs(Real(m[0])));
-            m[1] -= this->_ieps2*TOutput(Abs(Real(m[1])));
-            m[2] -= this->_ieps2*TOutput(Abs(Real(m[2])));
-
-            const TOutput sm0 = Sqrt(m[0])-this->_ieps2;
-            const TOutput sm2 = Sqrt(m[2])-this->_ieps2;
-
-            const TOutput yy = -( (m[0]-m[1])-p2 )/p2;
-
-            res = -(this->R3int(p2, sm0, sm2, yy) - this->R2int(m[1]-m[2], m[2], yy));
-            res /= p2;
           }
         else
-          TINDNS(res,xpi);
+          {
+            if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero) // never happens with real momenta (but just in case..)
+              {
+                const TOutput p2 = TOutput(xpi[5]);
+                TOutput m[3] = {TOutput(xpi[0]),TOutput(xpi[1]),TOutput(xpi[2])};
+
+                m[0] -= this->_ieps2*TOutput(Abs(Real(m[0])));
+                m[1] -= this->_ieps2*TOutput(Abs(Real(m[1])));
+                m[2] -= this->_ieps2*TOutput(Abs(Real(m[2])));
+
+                const TOutput sm0 = Sqrt(m[0])-this->_ieps2;
+                const TOutput sm2 = Sqrt(m[2])-this->_ieps2;
+
+                const TOutput yy = -( (m[0]-m[1])-p2 )/p2;
+
+                res = -(this->R3int(p2, sm0, sm2, yy) - this->R2int(m[1]-m[2], m[2], yy));
+                res /= p2;
+              }
+            else
+              TINDNS(res,xpi);
+          }
       }
   }
 
@@ -358,7 +366,7 @@ namespace ql
    * \param xpi an array with masses and momenta squared
    */
   template<typename TOutput, typename TMass, typename TScale>
-  void Triangle<TOutput,TMass,TScale>::TIN2(TOutput &res, TMass const (&xpi)[6]) const
+  void Triangle<TOutput,TMass,TScale>::TIN2(TOutput &res, TMass const (&xpi)[6], TMass const (&sxpi)[6], int const& massive) const
   {        
     if (this->iszero(Imag(xpi[0])) && this->iszero(Imag(xpi[1])) && this->iszero(Imag(xpi[2])))
       {
@@ -386,28 +394,36 @@ namespace ql
       }
     else
       {
-        if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero || xpi[4] != xpi[5])
+        if (massive == 2)
+          TINDNS2(res, sxpi);
+        else if (massive == 1)
           {
-            const TOutput p[2] = {TOutput(xpi[4]),TOutput(xpi[5])};
-            TOutput m[3] = {TOutput(xpi[0]), TOutput(xpi[1]), TOutput(xpi[2])};
-
-            if (p[0] == p[1]) throw LogicException("Triangle::TIN2", "threshold singularity");
-
-            m[0] -= this->_ieps2*TOutput(Abs(Real(m[0])));
-            m[1] -= this->_ieps2*TOutput(Abs(Real(m[1])));
-            m[2] -= this->_ieps2*TOutput(Abs(Real(m[2])));
-
-            const TOutput sm0 = Sqrt(m[0])-this->_ieps2;
-            const TOutput sm1 = Sqrt(m[1])-this->_ieps2;
-            const TOutput sm2 = Sqrt(m[2])-this->_ieps2;
-
-            const TOutput yy = ((m[0]-m[1])-p[1]+p[0])/(p[0]-p[1]);
-
-            res = this->R3int(p[1],sm0,sm2,yy)-this->R3int(p[0],sm1,sm2,yy);
-            res /= (p[0]-p[1]);
           }
         else
-          TINDNS(res,xpi);
+          {
+            if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero || xpi[4] != xpi[5])
+              {
+                const TOutput p[2] = {TOutput(xpi[4]),TOutput(xpi[5])};
+                TOutput m[3] = {TOutput(xpi[0]), TOutput(xpi[1]), TOutput(xpi[2])};
+
+                if (p[0] == p[1]) throw LogicException("Triangle::TIN2", "threshold singularity");
+
+                m[0] -= this->_ieps2*TOutput(Abs(Real(m[0])));
+                m[1] -= this->_ieps2*TOutput(Abs(Real(m[1])));
+                m[2] -= this->_ieps2*TOutput(Abs(Real(m[2])));
+
+                const TOutput sm0 = Sqrt(m[0])-this->_ieps2;
+                const TOutput sm1 = Sqrt(m[1])-this->_ieps2;
+                const TOutput sm2 = Sqrt(m[2])-this->_ieps2;
+
+                const TOutput yy = ((m[0]-m[1])-p[1]+p[0])/(p[0]-p[1]);
+
+                res = this->R3int(p[1],sm0,sm2,yy)-this->R3int(p[0],sm1,sm2,yy);
+                res /= (p[0]-p[1]);
+              }
+            else
+              TINDNS(res,xpi);
+          }
       }
   }
 
@@ -418,9 +434,8 @@ namespace ql
    * \param xpi an array with masses and momenta squared
    */
   template<typename TOutput, typename TMass, typename TScale>
-  void Triangle<TOutput,TMass,TScale>::TIN3(TOutput &res, TMass const (&xpi)[6]) const
+  void Triangle<TOutput,TMass,TScale>::TIN3(TOutput &res, TMass const (&xpi)[6], TMass const (&sxpi)[6], int const& massive) const
   {        
-
     if (this->iszero(Imag(xpi[0])) && this->iszero(Imag(xpi[1])) && this->iszero(Imag(xpi[2])))
       {
         TOutput Del2[3], y[3], z[2];
@@ -462,28 +477,36 @@ namespace ql
       }
     else
       {
-        const TOutput K2 = Kallen2(xpi[3],xpi[4],xpi[5]);
-        if (Real(K2) < this->_zero)
+        if (massive == 2)
+          TINDNS2(res, sxpi);
+        else if (massive == 1)
           {
-            const TOutput p[3] = {TOutput(xpi[3]),TOutput(xpi[4]),TOutput(xpi[5])};
-            TOutput m[3] = {TOutput(xpi[0]), TOutput(xpi[1]),TOutput(xpi[2])};
-
-            m[0] -= this->_ieps2*TOutput(Abs(Real(m[0])));
-            m[1] -= this->_ieps2*TOutput(Abs(Real(m[1])));
-            m[2] -= this->_ieps2*TOutput(Abs(Real(m[2])));
-
-            const TOutput alpha = Sqrt(K2)+this->_ieps2;
-            const TOutput sm0 = Sqrt(m[0])-this->_ieps2;
-            const TOutput sm1 = Sqrt(m[1])-this->_ieps2;
-            const TOutput sm2 = Sqrt(m[2])-this->_ieps2;
-
-            res = -(this->R3int(p[0], sm0, sm1,   m[1]-m[2]+p[1], p[2]-p[0]-p[1], p[1], alpha)
-                   -this->R3int(p[2], sm0, sm2, -(m[0]-m[1])+p[2]-p[1], p[1]-p[0]-p[2], p[0], alpha)
-                   +this->R3int(p[1], sm1, sm2, -(m[0]-m[1])+p[2]-p[1], p[0]+p[1]-p[2], p[0], alpha));
-            res /= alpha;
           }
         else
-          TINDNS(res,xpi);
+          {
+            const TOutput K2 = Kallen2(xpi[3],xpi[4],xpi[5]);
+            if (Real(K2) < this->_zero)
+              {
+                const TOutput p[3] = {TOutput(xpi[3]),TOutput(xpi[4]),TOutput(xpi[5])};
+                TOutput m[3] = {TOutput(xpi[0]), TOutput(xpi[1]),TOutput(xpi[2])};
+
+                m[0] -= this->_ieps2*TOutput(Abs(Real(m[0])));
+                m[1] -= this->_ieps2*TOutput(Abs(Real(m[1])));
+                m[2] -= this->_ieps2*TOutput(Abs(Real(m[2])));
+
+                const TOutput alpha = Sqrt(K2)+this->_ieps2;
+                const TOutput sm0 = Sqrt(m[0])-this->_ieps2;
+                const TOutput sm1 = Sqrt(m[1])-this->_ieps2;
+                const TOutput sm2 = Sqrt(m[2])-this->_ieps2;
+
+                res = -(this->R3int(p[0], sm0, sm1,   m[1]-m[2]+p[1], p[2]-p[0]-p[1], p[1], alpha)
+                       -this->R3int(p[2], sm0, sm2, -(m[0]-m[1])+p[2]-p[1], p[1]-p[0]-p[2], p[0], alpha)
+                       +this->R3int(p[1], sm1, sm2, -(m[0]-m[1])+p[2]-p[1], p[0]+p[1]-p[2], p[0], alpha));
+                res /= alpha;
+              }
+            else
+              TINDNS(res,xpi);
+          }
       }
   }  
 
@@ -555,10 +578,97 @@ namespace ql
         const TOutput arg2 = qz3[0]*qz3[1]/(sm3*sm3);
         const TOutput arg3 = x[0]/x[1];
         const TOutput arg4 = x[0]*x[1]/(sm1*sm1);
-        res += (this->cLn(arg1,Sign(Imag(arg1)))/(this->_cone-arg1)*this->cLn(arg2,Sign(Imag(arg2)))
-              - this->cLn(arg3,Sign(Imag(arg3)))/(this->_cone-arg3)*this->cLn(arg4,Sign(Imag(arg4))))/(this->_ctwo*x[1]);
+
+        TOutput log1 = this->cLn(arg2,Sign(Imag(arg2)));
+        TOutput log2 = this->cLn(arg4,Sign(Imag(arg4)));
+        if (Real(arg2) < this->_zero && Imag(arg2) < this->_zero) log1 += this->_2ipi;
+        if (Real(arg4) < this->_zero && Imag(arg4) < this->_zero) log2 += this->_2ipi;
+
+        res += (this->cLn(arg1,Sign(Imag(arg1)))/(this->_cone-arg1)*log1
+              - this->cLn(arg3,Sign(Imag(arg3)))/(this->_cone-arg3)*log2)/(this->_ctwo*x[1]);
       }
     res /= (a*sm1*sm2*sm3);
+  }
+
+  /*!
+   * \brief Triangle<TOutput, TMass, TScale>::TINDNS2
+   * \param res
+   * \return
+   */
+  template<typename TOutput, typename TMass, typename TScale>
+  void Triangle<TOutput,TMass,TScale>::TINDNS2(TOutput &res, TMass const (&xpi)[6]) const
+  {
+    TOutput m2 = xpi[1];
+    TOutput m4 = xpi[2];
+    TOutput p2 = TOutput(xpi[3]);
+    TOutput p3 = TOutput(xpi[5]);
+    TOutput p23 = TOutput(xpi[4]);
+
+    const TOutput sm2 = Sqrt(m2);
+    const TOutput sm3 = Abs(sm2);
+    const TOutput sm4 = Sqrt(m4);
+
+    TOutput r23 = this->_czero, k24 = this->_czero, r34 = this->_czero;
+    r23 = (m2-p2-p2*this->_ieps2)/(sm2*sm3);
+    k24 = (m2+m4-p23-p23*this->_ieps2)/(sm2*sm4);
+    r34 = (m4-p3-p3*this->_ieps2)/(sm3*sm4);
+
+    TOutput r24, d24;
+    this->R(r24, d24, k24);
+
+    const TOutput a = r34/r24 - r23;
+    if (a == this->_czero)
+      {
+        std::cout << "Triangle::TINDNS2: threshold singularity, return 0" << std::endl;
+        res = this->_czero;
+        return;
+      }
+
+    const TOutput b = -d24/sm3 + r34/sm2 - r23/sm4;
+    const TOutput c = (sm4/sm2 - r24)/(sm3*sm4);
+
+    TOutput x[2];
+    this->solveabcd(a,b,c,x);
+    x[0] = -x[0];
+    x[1] = -x[1];
+
+    const TOutput qz[2]  = { x[0]/r24, x[1]/r24};
+    const TScale siqz[2] = { (TScale) Sign(Imag(qz[0])), (TScale) Sign(Imag(qz[1]))};
+
+    res = -this->xspence(qz,siqz,sm2,Sign(Imag(sm2)))/(qz[0]-qz[1])/r24;
+
+    if (x[1] != this->_czero)
+      {
+        const TOutput arg1 = qz[0]/qz[1];
+        const TOutput arg2 = qz[0]*qz[1]/(sm2*sm2);
+        const TOutput arg3 = x[0]/x[1];
+        const TOutput arg4 = x[0]*x[1]/(sm4*sm4);
+
+        TOutput log1 = this->cLn(arg2,Sign(Imag(arg2)));
+        TOutput log2 = this->cLn(arg4,Sign(Imag(arg4)));
+        if (Real(arg2) < this->_zero && Imag(arg2) < this->_zero) log1 += this->_2ipi;
+        if (Real(arg4) < this->_zero && Imag(arg4) < this->_zero) log2 += this->_2ipi;
+
+        res += (this->cLn(arg1,Sign(Imag(arg1)))/(this->_cone-arg1)*log1
+              - this->cLn(arg3,Sign(Imag(arg3)))/(this->_cone-arg3)*log2)/(this->_ctwo*x[1]);
+      }
+
+    const TScale siqx[2] = { (TScale) Sign(Imag(x[0])), (TScale) Sign(Imag(x[1])) };
+    res += this->xspence(x,siqx,sm4,Sign(Imag(sm4)))/(x[0]-x[1]);
+
+    if (!this->iszero(Abs(r23)))
+      {
+        const TOutput arg = r23*sm3/r24;
+        res += this->xspence(x,siqx,arg, Sign(Imag(arg)))/(x[0]-x[1]);
+      }
+
+    if (!this->iszero(Abs(r34)))
+      {
+        const TOutput arg = r34*sm3;
+        res -= this->xspence(x,siqx,arg, Sign(Imag(arg)))/(x[0]-x[1]);
+      }
+
+    res /= (a*sm2*sm3*sm4);
   }
 
   /*!

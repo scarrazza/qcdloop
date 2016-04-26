@@ -9,6 +9,7 @@
 #include "qcdloop/tools.h"
 #include "qcdloop/maths.h"
 #include "qcdloop/exceptions.h"
+#include <iostream>
 
 namespace ql
 {
@@ -191,7 +192,11 @@ namespace ql
         const TMass y13 = xpi[0] + xpi[2] - xpi[8];
         const TMass y24 = xpi[1] + xpi[3] - xpi[9];
         if (this->iszero(y13) || this->iszero(y24))
-          throw RangeError("Box::integral","Modified Cayley elements y13 or y24=0");
+          {
+            std::cout << "Box::integral: Modified Cayley elements y13 or y24=0" << std::endl;
+            res[0] = res[1] = res[2] = this->_czero;
+            return;
+          }
 
         if (massive == 0)
           B0m(this->_val, xpi, musq);
