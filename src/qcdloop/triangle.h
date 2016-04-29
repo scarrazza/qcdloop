@@ -72,6 +72,9 @@ namespace ql
     //! Calculation of triangle with all p and complex m non-zero
     void TINDNS(TOutput &res, TMass const (&xpi)[6]) const;
 
+    //! Calculation of triangle with 1 massive particles
+    void TINDNS1(TOutput &res, TMass const (&xpi)[6]) const;
+
     //! Calculation of triangle with 2 massive particles
     void TINDNS2(TOutput &res, TMass const (&xpi)[6]) const;
 

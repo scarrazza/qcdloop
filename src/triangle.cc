@@ -332,8 +332,7 @@ namespace ql
         if (massive == 2)
           TINDNS2(res, sxpi);
         else if (massive == 1)
-          {
-          }
+          TINDNS1(res, sxpi);
         else
           {
             if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero) // never happens with real momenta (but just in case..)
@@ -397,8 +396,7 @@ namespace ql
         if (massive == 2)
           TINDNS2(res, sxpi);
         else if (massive == 1)
-          {
-          }
+          TINDNS1(res, sxpi);
         else
           {
             if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero || xpi[4] != xpi[5])
@@ -480,8 +478,7 @@ namespace ql
         if (massive == 2)
           TINDNS2(res, sxpi);
         else if (massive == 1)
-          {
-          }
+          TINDNS1(res, sxpi);
         else
           {
             const TOutput K2 = Kallen2(xpi[3],xpi[4],xpi[5]);
@@ -511,7 +508,7 @@ namespace ql
   }  
 
   /*!
-   * Computes the finite triangle, when Kallen2 > 0.
+   * Computes the finite triangle, when Kallen2 > 0 and 3 massive particles.
    * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
@@ -591,9 +588,10 @@ namespace ql
   }
 
   /*!
-   * \brief Triangle<TOutput, TMass, TScale>::TINDNS2
-   * \param res
-   * \return
+   * Computes the finite triangle, with 2 massive particles
+   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq
+   * \param res the output object for the finite part.
+   * \param xpi an array with masses and momenta squared
    */
   template<typename TOutput, typename TMass, typename TScale>
   void Triangle<TOutput,TMass,TScale>::TINDNS2(TOutput &res, TMass const (&xpi)[6]) const
@@ -659,6 +657,78 @@ namespace ql
     if (!this->iszero(Abs(r23)))
       {
         const TOutput arg = r23*sm3/r24;
+        res += this->xspence(x,siqx,arg, Sign(Imag(arg)))/(x[0]-x[1]);
+      }
+
+    if (!this->iszero(Abs(r34)))
+      {
+        const TOutput arg = r34*sm3;
+        res -= this->xspence(x,siqx,arg, Sign(Imag(arg)))/(x[0]-x[1]);
+      }
+
+    res /= (a*sm2*sm3*sm4);
+  }
+
+  /*!
+   * Computes the finite triangle, with 1 massive particles.
+   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq
+   * \param res the output object for the finite part.
+   * \param xpi an array with masses and momenta squared
+   */
+  template<typename TOutput, typename TMass, typename TScale>
+  void Triangle<TOutput,TMass,TScale>::TINDNS1(TOutput &res, TMass const (&xpi)[6]) const
+  {
+    TOutput m4 = xpi[2];
+    TOutput p2 = TOutput(xpi[3]);
+    TOutput p3 = TOutput(xpi[4]);
+    TOutput p4 = TOutput(xpi[5]);
+    TOutput p23 = p4;
+
+    const TOutput sm4 = Sqrt(m4);
+    const TOutput sm3 = Abs(sm4);
+    const TOutput sm2 = sm3;
+
+    TOutput r23 = this->_czero, r24 = this->_czero, r34 = this->_czero;
+    r23 = (-p2-p2*this->_ieps2)/(sm2*sm3);
+    r24 = (m4-p23-p23*this->_ieps2)/(sm2*sm4);
+    r34 = (m4-p3-p3*this->_ieps2)/(sm3*sm4);
+
+    const TOutput a = r34*r24 - r23;
+    if (a == this->_czero)
+      {
+        std::cout << "Triangle::TINDNS1: threshold singularity, return 0" << std::endl;
+        res = this->_czero;
+        return;
+      }
+
+    const TOutput b = r24/sm3 + r34/sm2 - r23/sm4;
+    const TOutput c = this->_cone/(sm2*sm3);
+
+    TOutput x[2];
+    this->solveabcd(a,b,c,x);
+    x[0] = -x[0];
+    x[1] = -x[1];
+
+    const TScale siqx[2] = { (TScale) Sign(Imag(x[0])), (TScale) Sign(Imag(x[1])) };
+
+    const TOutput arg1 = x[0]/x[1];
+    const TOutput arg2 = x[0]*x[1]/(sm4*sm4);
+    const TOutput arg3 = r23/(sm3*sm3);
+
+    const TOutput log0 = this->cLn(arg1,Sign(Imag(arg1)))/(this->_cone-arg1);
+
+    TOutput log1 = this->cLn(arg2,Sign(Imag(arg2)));
+    TOutput log2 = this->cLn(arg3,Sign(Imag(arg3)));
+    if (Real(arg2) < this->_zero && Imag(arg2) < this->_zero) log1 += this->_2ipi;
+    if (Real(arg3) < this->_zero && Imag(arg3) < this->_zero) log2 += this->_2ipi;
+
+    res = this->xspence(x,siqx,sm4,Sign(Imag(sm4)))/(x[0]-x[1])
+         -log0*log1/(this->_ctwo*x[1])
+         -log0*log2/x[1];
+
+    if (!this->iszero(Abs(r24)))
+      {
+        const TOutput arg = r24*sm3;
         res += this->xspence(x,siqx,arg, Sign(Imag(arg)))/(x[0]-x[1]);
       }
 
