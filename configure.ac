@@ -4,7 +4,7 @@
 AC_PREREQ([2.63])
 #define([gitversion], [esyscmd([sh -c "git rev-parse --short HEAD | tr -d '\n'"])])
 #AC_INIT(qcdloop, [gitversion], stefano.carrazza@cern.ch)
-AC_INIT(qcdloop, 2.0.b2, stefano.carrazza@cern.ch)
+AC_INIT(qcdloop, 2.0.0, stefano.carrazza@cern.ch)
 AC_CONFIG_MACRO_DIR([m4])
 AM_MAINTAINER_MODE
 AC_CONFIG_AUX_DIR([autoconfig])
