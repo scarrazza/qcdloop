@@ -272,7 +272,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle with all internal masses zero.
-   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools implementation
+   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools implementation \cite Hahn:2006qw.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */
@@ -298,7 +298,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle with all internal masses zero.
-   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools and OneLoop implementation
+   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools and OneLoop implementation \cite Hahn:2006qw, \cite vanHameren:2010cp.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */
@@ -360,7 +360,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle with all internal masses zero.
-   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools and OneLoop implementation
+   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools and OneLoop implementation \cite Hahn:2006qw, \cite vanHameren:2010cp.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */
@@ -427,7 +427,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle with all internal masses zero.
-   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools and OneLoop implementation
+   * Formulae from 't Hooft and Veltman \cite tHooft:1978xw following the LoopTools and OneLoop implementation \cite Hahn:2006qw, \cite vanHameren:2010cp.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */
@@ -509,7 +509,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle, when Kallen2 > 0 and 3 massive particles.
-   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq following the OneLoop implementation
+   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq following the OneLoop implementation \cite vanHameren:2010cp.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */
@@ -589,7 +589,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle, with 2 massive particles
-   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq following the OneLoop implementation
+   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq following the OneLoop implementation \cite vanHameren:2010cp.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */
@@ -671,7 +671,7 @@ namespace ql
 
   /*!
    * Computes the finite triangle, with 1 massive particles.
-   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq following the OneLoop implementation
+   * Formulae from Denner, Nierste and Scharf \cite Denner:1991qq following the OneLoop implementation \cite vanHameren:2010cp.
    * \param res the output object for the finite part.
    * \param xpi an array with masses and momenta squared
    */

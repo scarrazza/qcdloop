@@ -565,7 +565,7 @@ namespace ql
 
   /*!
    * Finite box with zero masses. Formulae from \cite Denner:1991qq.
-   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation
+   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation \cite Hahn:2006qw.
    * \param Y the modified Cayley matrix.
    */
   template<typename TOutput, typename TMass, typename TScale>
@@ -612,7 +612,7 @@ namespace ql
 
   /*!
    * Finite box with 1 non-zero mass. Formulae from \cite Denner:1991qq.
-   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation
+   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation \cite Hahn:2006qw.
    * \param Y the modified Cayley matrix.
    */
   template<typename TOutput, typename TMass, typename TScale>
@@ -657,7 +657,7 @@ namespace ql
 
   /*!
    * Finite box with 2 non-zero masses. Formulae from \cite Denner:1991qq.
-   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation
+   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation \cite Hahn:2006qw.
    * \param Y the modified Cayley matrix.
    */
   template<typename TOutput, typename TMass, typename TScale>
@@ -708,7 +708,7 @@ namespace ql
 
   /*!
    * Finite box with 3 non-zero masses. Formulae from \cite Denner:1991qq.
-   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation
+   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation \cite Hahn:2006qw.
    * \param Y the modified Cayley matrix.
    */
   template<typename TOutput, typename TMass, typename TScale>
@@ -783,7 +783,7 @@ namespace ql
 
   /*!
    * Finite box with 4 non-zero masses. Formulae from \cite Denner:1991qq.
-   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation
+   * \param res output object res[0,1,2] the coefficients in the Laurent series, following the LoopTools implementation \cite Hahn:2006qw.
    * \param Y the modified Cayley matrix.
    */
   template<typename TOutput, typename TMass, typename TScale>
