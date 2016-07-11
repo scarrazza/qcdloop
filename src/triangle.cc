@@ -12,7 +12,6 @@
 #include <algorithm>
 #include <iostream>
 using std::sort;
-using std::iota;
 
 namespace ql
 {
