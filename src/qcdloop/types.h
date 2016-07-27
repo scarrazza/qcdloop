@@ -7,7 +7,9 @@
 
 #pragma once
 
+extern "C" { // for gcc4.7 compatibility
 #include <quadmath.h>
+}
 #include <complex>
 
 #define UNUSED(expr) (void)(expr)

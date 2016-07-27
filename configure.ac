@@ -4,7 +4,7 @@
 AC_PREREQ([2.63])
 #define([gitversion], [esyscmd([sh -c "git rev-parse --short HEAD | tr -d '\n'"])])
 #AC_INIT(qcdloop, [gitversion], stefano.carrazza@cern.ch)
-AC_INIT(qcdloop, 2.0.1, stefano.carrazza@cern.ch)
+AC_INIT(qcdloop, 2.0.2, stefano.carrazza@cern.ch)
 AC_CONFIG_MACRO_DIR([m4])
 AM_MAINTAINER_MODE
 AC_CONFIG_AUX_DIR([autoconfig])
@@ -29,6 +29,9 @@ AX_CXX_COMPILE_STDCXX_11([noext])
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h sys/time.h quadmath.h])
+
+# Check for compile flag
+AX_CHECK_COMPILE_FLAG([-fext-numeric-literals],[CPPFLAGS="$CPPFLAGS -fext-numeric-literals"])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

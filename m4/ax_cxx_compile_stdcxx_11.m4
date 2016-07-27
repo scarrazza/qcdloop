@@ -87,7 +87,7 @@ m4_define([_AX_CXX_COMPILE_STDCXX_11_testbody], [[
     }
 
     // Check for C++11 attribute support
-    void noret [[noreturn]] () { throw 0; }
+    // void noret [[noreturn]] () { throw 0; }
 ]])
 
 AC_DEFUN([AX_CXX_COMPILE_STDCXX_11], [dnl
