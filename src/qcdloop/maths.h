@@ -41,7 +41,7 @@ namespace ql
 
   // Complex tools, imag, real and conj.
   inline double  Imag(double const& x)  { UNUSED(x); return 0; }
-  inline qdouble Imag(qdouble const& x) { UNUSED(x); return 0.0q; }
+  inline qdouble Imag(qdouble const& x) { UNUSED(x); return qdouble(0); }
   inline double  Imag(complex const& x) { return x.imag(); }
   inline qdouble Imag(qcomplex const& x){ return cimagq(x);}
 
@@ -101,5 +101,5 @@ namespace ql
 
   // Heaviside function
   inline double Htheta(double const& x) { return 0.5*(1+Sign(x)); }
-  inline qdouble Htheta(qdouble const& x){ return 0.5q*(1.0q+Sign(x));}
+  inline qdouble Htheta(qdouble const& x){ return qdouble(0.5)*(qdouble(1)+Sign(x));}
 }
