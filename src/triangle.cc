@@ -398,7 +398,8 @@ namespace ql
           TINDNS1(res, sxpi);
         else
           {
-            if (Real(Kallen2(xpi[3],xpi[4],xpi[5])) < this->_zero || xpi[4] != xpi[5])
+            TOutput K2 = Kallen2(xpi[3],xpi[4],xpi[5]);
+            if (Real(K2) < this->_zero)
               {
                 const TOutput p[2] = {TOutput(xpi[4]),TOutput(xpi[5])};
                 TOutput m[3] = {TOutput(xpi[0]), TOutput(xpi[1]), TOutput(xpi[2])};
