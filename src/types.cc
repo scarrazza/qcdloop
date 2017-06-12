@@ -9,6 +9,7 @@
 
 namespace std
 {
+#ifndef NOQUADMATH
   ostream& operator<<(std::ostream& out, ql::qdouble f)
   {
      char buf[200];
@@ -24,7 +25,8 @@ namespace std
      out << "(" << crealq(f) << "," << cimagq(f) << ")";
      return out;
   }
- 
+#endif
+
   ostream& operator<<(std::ostream& os, ql::Code code) 
   {      
     return os << "\033[" << static_cast<int>(code) << "m";

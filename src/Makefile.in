@@ -258,6 +258,7 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
+MACROS = @MACROS@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -364,7 +365,7 @@ otherinclude_HEADERS = qcdloop/qcdloop.h \
 		       qcdloop/box.h
 
 libqcdloop_la_LDFLAGS = -version-info 0:0:0
-libqcdloop_la_CPPFLAGS = -Wall -Wextra -fPIC
+libqcdloop_la_CPPFLAGS = -Wall -Wextra -fPIC $(MACROS)
 all: all-am
 
 .SUFFIXES:

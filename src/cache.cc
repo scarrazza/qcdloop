@@ -17,6 +17,7 @@ namespace std {
     seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
   }
 
+#ifndef NOQUADMATH
   template <>
   struct hash<ql::qdouble> : public __hash_base<size_t, ql::qdouble>
   {
@@ -26,19 +27,28 @@ namespace std {
     }
   };
 
-  template <> struct hash<ql::complex> : public __hash_base<size_t, ql::complex>
-  {
-    inline size_t operator()(const ql::complex & x) const noexcept
-    {
-      return x != ql::complex{0.0,0.0} ? std::_Hash_impl::hash(x) : 0;
-    }
-  };
-
   template <> struct hash<ql::qcomplex> : public __hash_base<size_t, ql::qcomplex>
   {
     inline size_t operator()(const ql::qcomplex & x) const noexcept
     {
       return x != ql::qcomplex{0.0q,0.0q} ? std::_Hash_impl::hash(x) : 0;
+    }
+  };
+#else
+  template <> struct hash<ql::qcomplex> : public __hash_base<size_t, ql::qcomplex>
+  {
+    inline size_t operator()(const ql::qcomplex & x) const noexcept
+    {
+      return x != ql::qcomplex{0.0,0.0} ? std::_Hash_impl::hash(x) : 0;
+    }
+  };
+#endif
+
+  template <> struct hash<ql::complex> : public __hash_base<size_t, ql::complex>
+  {
+    inline size_t operator()(const ql::complex & x) const noexcept
+    {
+      return x != ql::complex{0.0,0.0} ? std::_Hash_impl::hash(x) : 0;
     }
   };
 }
