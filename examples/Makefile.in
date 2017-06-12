@@ -228,7 +228,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
-MACROS = @MACROS@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -247,6 +246,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+QUADMATH_LIB = @QUADMATH_LIB@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -310,7 +310,7 @@ top_srcdir = @top_srcdir@
 trigger_test_SOURCES = trigger_test.cc
 cache_test_SOURCES = cache_test.cc
 cmass_test_SOURCES = cmass_test.cc
-AM_CPPFLAGS = -I$(top_srcdir)/src -Wall -Wextra -fPIC
+AM_CPPFLAGS = -I$(top_srcdir)/src -Wall -Wextra -fPIC -fext-numeric-literals
 AM_LDFLAGS = -L$(top_builddir)/src/.libs
 all: all-am
 

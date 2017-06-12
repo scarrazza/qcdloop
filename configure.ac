@@ -8,7 +8,7 @@ AC_INIT(qcdloop, 2.0.3, stefano.carrazza@cern.ch)
 AC_CONFIG_MACRO_DIR([m4])
 AM_MAINTAINER_MODE
 AC_CONFIG_AUX_DIR([autoconfig])
-#m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 LT_INIT()
 
@@ -33,10 +33,10 @@ if test x$enable_quadmath == xyes; then
    AC_CONFIG_FILES([examples/Makefile])
    AC_CHECK_HEADERS([stdlib.h sys/time.h quadmath.h])
    AX_CHECK_COMPILE_FLAG([-fext-numeric-literals],[CPPFLAGS="$CPPFLAGS -fext-numeric-literals"])
+   AC_SUBST(QUADMATH_LIB,["-lquadmath"])
 else
  AC_CHECK_HEADERS([stdlib.h sys/time.h])
- MACROS="-DNOQUADMATH"
- AC_SUBST(MACROS)
+ AC_SUBST(QUADMATH_LIB,[""])
 fi
 AM_CONDITIONAL(ENABLE_QUADMATH, [test x$enable_quadmath == xyes])
 

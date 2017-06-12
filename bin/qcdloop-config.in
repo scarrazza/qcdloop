@@ -34,7 +34,7 @@ tmp=$( echo "$*" | egrep -- '--\<libdir\>')
 test -n "$tmp" && OUT="$OUT @libdir@"
 
 tmp=$( echo "$*" | egrep -- '--\<ldflags\>')
-test -n "$tmp" && OUT="$OUT -L@libdir@ -lqcdloop -lquadmath"
+test -n "$tmp" && OUT="$OUT -L@libdir@ -lqcdloop @QUADMATH_LIB@"
 
 ## Version
 tmp=$( echo "$*" | egrep -- '--\<version\>')

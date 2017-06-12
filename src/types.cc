@@ -9,7 +9,7 @@
 
 namespace std
 {
-#ifndef NOQUADMATH
+#ifdef HAVE_QUADMATH_H
   ostream& operator<<(std::ostream& out, ql::qdouble f)
   {
      char buf[200];

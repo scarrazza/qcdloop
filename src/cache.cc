@@ -17,7 +17,7 @@ namespace std {
     seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
   }
 
-#ifndef NOQUADMATH
+#ifdef HAVE_QUADMATH_H
   template <>
   struct hash<ql::qdouble> : public __hash_base<size_t, ql::qdouble>
   {

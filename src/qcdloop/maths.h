@@ -40,7 +40,7 @@ namespace ql
 
   inline complex  Conjg(complex const& x) { return std::conj(x); }
 
-#ifndef NOQUADMATH
+#ifdef HAVE_QUADMATH_H
   inline qdouble  Log(qdouble const& x)  { return logq(x); }
   inline qcomplex Log(qcomplex const& x) { return clogq(x); }
 

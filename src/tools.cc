@@ -17,7 +17,7 @@ using std::is_same;
 
 namespace ql {    
 
-#ifdef NOQUADMATH
+#ifndef HAVE_QUADMATH_H
   template<typename TOutput, typename TMass, typename TScale>
   Tools<TOutput,TMass,TScale>::Tools():
     _qlonshellcutoff(1e-10),
