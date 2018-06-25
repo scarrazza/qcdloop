@@ -37,8 +37,9 @@ Checkout the code and compile the code using the
 following procedure:
 
 ```Shell
-cd qcdloop
-./configure --prefix=/where/install/qcdloop #(optional)
+mkdir build
+cd build
+cmake ..
 make && make install
 ```
 
