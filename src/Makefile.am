@@ -26,4 +26,4 @@ otherinclude_HEADERS = qcdloop/qcdloop.h \
 		       qcdloop/box.h
 
 libqcdloop_la_LDFLAGS = -version-info 0:0:0
-libqcdloop_la_CPPFLAGS= -Wall -Wextra -fPIC
+libqcdloop_la_CPPFLAGS= -Wall -Wextra -fPIC $(MACROS)

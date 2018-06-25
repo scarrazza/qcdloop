@@ -276,6 +276,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+QUADMATH_LIB = @QUADMATH_LIB@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -364,7 +365,7 @@ otherinclude_HEADERS = qcdloop/qcdloop.h \
 		       qcdloop/box.h
 
 libqcdloop_la_LDFLAGS = -version-info 0:0:0
-libqcdloop_la_CPPFLAGS = -Wall -Wextra -fPIC
+libqcdloop_la_CPPFLAGS = -Wall -Wextra -fPIC $(MACROS)
 all: all-am
 
 .SUFFIXES:

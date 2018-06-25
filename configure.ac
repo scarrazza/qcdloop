@@ -17,7 +17,6 @@ AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([bin/Makefile]) 
 AC_CONFIG_FILES([bin/qcdloop-config])
 AC_CONFIG_FILES([src/Makefile])
-AC_CONFIG_FILES([examples/Makefile])
 AM_INIT_AUTOMAKE([subdir-objects])
 
 # Checks for programs.
@@ -27,11 +26,19 @@ AC_PROG_CC
 # Check for libraries.
 AX_CXX_COMPILE_STDCXX_11([noext])
 
-# Checks for header files.
-AC_CHECK_HEADERS([stdlib.h sys/time.h quadmath.h])
-
 # Check for compile flag
-AX_CHECK_COMPILE_FLAG([-fext-numeric-literals],[CPPFLAGS="$CPPFLAGS -fext-numeric-literals"])
+AC_ARG_ENABLE([quadmath],[AC_HELP_STRING(--disable-quadmath, [no quadmath])],
+  [], [enable_quadmath=yes])
+if test x$enable_quadmath == xyes; then
+   AC_CONFIG_FILES([examples/Makefile])
+   AC_CHECK_HEADERS([stdlib.h sys/time.h quadmath.h])
+   AX_CHECK_COMPILE_FLAG([-fext-numeric-literals],[CPPFLAGS="$CPPFLAGS -fext-numeric-literals"])
+   AC_SUBST(QUADMATH_LIB,["-lquadmath"])
+else
+ AC_CHECK_HEADERS([stdlib.h sys/time.h])
+ AC_SUBST(QUADMATH_LIB,[""])
+fi
+AM_CONDITIONAL(ENABLE_QUADMATH, [test x$enable_quadmath == xyes])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
