@@ -19,6 +19,9 @@ install:
 script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake -DENABLE_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Debug ..
   - make
+  - ./trigger_test
+  - ./cmass_test
+  - ./cache_test
 
