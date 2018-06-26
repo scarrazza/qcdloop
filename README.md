@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/scarrazza/qcdloop.svg?branch=master)](https://travis-ci.org/scarrazza/qcdloop)
+[![Circle CI](https://circleci.com/gh/scarrazza/qcdloop.svg?style=svg)](https://circleci.com/gh/scarrazza/qcdloop)
 
 ![alt text](https://raw.githubusercontent.com/scarrazza/qcdloop/master/extra/logo.png "Logo QCDLoop")
 
@@ -37,9 +37,8 @@ Checkout the code and compile the code using the
 following procedure:
 
 ```Shell
-mkdir build
-cd build
-cmake ..
+cd qcdloop
+./configure --prefix=/where/install/qcdloop #(optional)
 make && make install
 ```
 
