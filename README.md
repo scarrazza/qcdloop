@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/scarrazza/qcdloop.svg?style=svg)](https://circleci.com/gh/scarrazza/qcdloop)
+[![Build Status](https://travis-ci.org/scarrazza/qcdloop.svg?branch=master)](https://travis-ci.org/scarrazza/qcdloop)
 
 ![alt text](https://raw.githubusercontent.com/scarrazza/qcdloop/master/extra/logo.png "Logo QCDLoop")
 
