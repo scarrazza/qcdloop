@@ -12,6 +12,10 @@ addons:
       - g++-5
       - gcc-5
 
+install:
+  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
+  - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
+
 script:
   - mkdir build
   - cd build
