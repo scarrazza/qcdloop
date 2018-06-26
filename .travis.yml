@@ -10,8 +10,7 @@ addons:
     packages:
       - cmake
       - g++-5
-      - gcc-5
-      - ld
+      - gcc-5      
 
 install:
   - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
@@ -20,7 +19,7 @@ install:
 script:
   - mkdir build
   - cd build
-  - cmake -DENABLE_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Debug ..
+  - cmake -DENABLE_EXAMPLES=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=gold ..
   - make
   - ./trigger_test
   - ./cmass_test
