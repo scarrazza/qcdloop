@@ -1,0 +1,10 @@
+== Installation
+
+   ./configure --prefix=<optiont path>
+   make && make install
+
+== Documentation
+
+   Creates the Doxygen documentation:
+   cd doc;
+   doxygen Doxyfile
