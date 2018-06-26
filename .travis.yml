@@ -1,7 +1,6 @@
 # travis CI script
 os: linux
 language: cpp
-compiler: gcc
 sudo: required
   
 addons:
@@ -11,6 +10,7 @@ addons:
     packages:
       - cmake
       - g++-5
+      - gcc-5
 
 script:
   - mkdir build
