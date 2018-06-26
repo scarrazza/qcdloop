@@ -46,7 +46,7 @@ make && make install
 By the default, if prefix is not set the program is installed in
 /usr/local. If you define a custom prefix, remember to export
 qcdloop/lib to the LD_LIBRARY_PATH. QCDLoop requires a compiler with
-C++11 and quadmath features (e.g. gcc >= 4.7)
+C++11 and quadmath features (e.g. gcc >= 5)
 
 ## Contact Information
 
