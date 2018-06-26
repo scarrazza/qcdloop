@@ -1,13 +1,16 @@
 # travis CI script
-
+os: linux
 language: cpp
 compiler: gcc
-dist: trusty
+sudo: required
   
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - cmake
+      - g++-5
 
 script:
   - mkdir build
