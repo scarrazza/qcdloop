@@ -1,0 +1,27 @@
+# travis CI script
+os: linux
+language: cpp
+sudo: required
+  
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - cmake
+      - g++-5
+      - gcc-5      
+
+install:
+  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
+  - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
+
+script:
+  - mkdir build
+  - cd build
+  - cmake -DENABLE_EXAMPLES=ON ..
+  - make
+  - ./trigger_test
+  - ./cmass_test
+  - ./cache_test
+
