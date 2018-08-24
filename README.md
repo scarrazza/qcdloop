@@ -44,9 +44,15 @@ make && make install
 ```
 
 By the default, if prefix is not set the program is installed in
-/usr/local. If you define a custom prefix, remember to export
-qcdloop/lib to the LD_LIBRARY_PATH. QCDLoop requires a compiler with
-C++11 and quadmath features (e.g. gcc >= 5)
+/usr/local. If you define a custom prefix, use the `-DCMAKE_INSTALL_PREFIX` option and 
+remember to export qcdloop/lib to the LD_LIBRARY_PATH. QCDLoop requires a compiler with
+C++11 and quadmath features (e.g. gcc >= 5).
+
+Other qcdloop cmake options are:
+- `ENABLE_EXAMPLES`, build examples in C++, default OFF.
+- `ENABLE_FORTRAN_WRAPPER`, include fortran wrapper in the library, default ON.
+
+The fortran wrapper follows the previous syntax in qcdloop, see details in table 2 of https://arxiv.org/pdf/1605.03181.pdf.
 
 ## Contact Information
 
