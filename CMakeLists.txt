@@ -93,6 +93,12 @@ install(FILES ${PROJECT_SOURCE_DIR}/src/qcdloop.pc DESTINATION lib/pkgconfig)
 install(DIRECTORY src/qcdloop DESTINATION include)
 install(TARGETS qcdloop DESTINATION lib)
 
+# enable disable fortran/wrapper (to avoid name conflicts with ql1.x)
+option(ENABLE_FORTRAN_WRAPPER "Enable fortran wrapper" ON)
+if(ENABLE_FORTRAN_WRAPPER)
+  add_definitions(-DQL_NAMES)
+endif()
+
 # qcdloop examples
 option(ENABLE_EXAMPLES "Compile test examples" OFF)
 if(ENABLE_EXAMPLES)
