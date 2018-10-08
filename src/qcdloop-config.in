@@ -38,6 +38,6 @@ test -n "$tmp" && OUT="$OUT -L@libdir@ -lqcdloop -lquadmath"
 
 ## Version
 tmp=$( echo "$*" | egrep -- '--\<version\>')
-test -n "$tmp" && OUT="$OUT @PACKAGE_VERSION@"
+test -n "$tmp" && OUT="$OUT @VERSION@"
 
 echo $OUT
