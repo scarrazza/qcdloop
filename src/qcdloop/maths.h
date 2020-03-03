@@ -56,6 +56,8 @@ namespace ql
   // Comparison and sign operations
   inline int Sign(double const& x) { return (double(0) < x) - (x < double(0)); }
   inline int Sign(qdouble const& x){ return (qdouble(0) < x) -(x < qdouble(0));}
+  inline complex Sign(complex const& x){ return x/Abs(x);}
+  inline qcomplex Sign(qcomplex const& x){return x/Abs(x);}
 
   inline double Max(double const& a, double const& b)
   {

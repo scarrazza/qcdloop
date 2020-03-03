@@ -47,7 +47,7 @@ namespace ql
                                               vector<TScale> const& p)
   {
     if (!this->checkCache(mu2,m,p))
-      {        
+      {
         if (mu2 < 0) throw RangeError("Bubble::integral","mu2 is negative!");
 
         // Normalization
@@ -65,10 +65,10 @@ namespace ql
             cout << "s,m0,m1 = "   << p0 << ", " << m0 << ", " << m1 << ql::def << endl;
             this->_val[0] = this->_val[2] = this->_czero;
             this->_val[1] = this->_cone;
-          }        
+          }
         else if (this->iszero(m0/musq))
           {
-            if (this->iszero(Abs((m1-p0)/musq))) BB1(this->_val,musq,m1);    // I(s;0,s) s = m1, DD(4.13)            
+            if (this->iszero(Abs((m1-p0)/musq))) BB1(this->_val,musq,m1);    // I(s;0,s) s = m1, DD(4.13)
             else if (this->iszero(Abs(p0/musq))) BB2(this->_val,musq,m1);    // I(0;0,m2)
             else if (this->iszero(Abs(m1/musq))) BB3(this->_val,musq,m1-TMass(p0)); // I(s;0,0)
             else                                 BB4(this->_val,musq,m1,p0); // I(s;0,m2)
@@ -76,7 +76,7 @@ namespace ql
         else if (this->iszero(Abs(p0/musq))) // deal with special case, s = 0
           BB5(this->_val, musq, m0, m1);
         else
-          BB0(this->_val, musq, m0, m1, p0);          
+          BB0(this->_val, musq, m0, m1, p0);
 
         this->storeCache(mu2,m,p);
       }
@@ -111,7 +111,7 @@ namespace ql
     const TMass sqm1 = Sqrt(m1);
     const TOutput bb = TOutput(m0+m1-s);
     const TOutput rtt= Sqrt(bb*bb - this->_cfour*TOutput(m1*m0));
-    const TOutput x1 = this->_chalf*(bb+rtt)/(sqm0*sqm1);
+    const TOutput x1 = this->_chalf*(bb+Sign(bb)*rtt)/(sqm0*sqm1);
     const TOutput x2 = this->_cone/x1;
     res[0] = this->_ctwo - Log(sqm0*sqm1/mu2) + (m0-m1)/s*Log(sqm1/sqm0) - sqm0*sqm1/s*(x2-x1)*this->cLn(x1, Sign(Real(x1-x2)));
     res[1] = this->_cone;
