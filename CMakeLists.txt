@@ -23,10 +23,12 @@ set(VERSION "\"${PROJECT_VERSION}\"")
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -march=nocona -mtune=haswell -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -fext-numeric-literals")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address -fPIC ${CMAKE_CXX_FLAGS}" CACHE STRING "debug compile flags" FORCE)
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-fsanitize=address" CACHE STRING "debug linker flags" FORCE)
+
+include(GNUInstallDirs)
 set(prefix ${CMAKE_INSTALL_PREFIX})
 set(exec_prefix "${prefix}")
 set(includedir "${prefix}/include")
-set(libdir "${prefix}/lib")
+set(libdir ${CMAKE_INSTALL_FULL_LIBDIR})
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/src/qcdloop/config.h.in"
@@ -89,9 +91,9 @@ target_link_libraries(qcdloop)
 install(FILES ${CMAKE_BINARY_DIR}/src/qcdloop-config
   DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
   GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-install(FILES ${PROJECT_SOURCE_DIR}/src/qcdloop.pc DESTINATION lib/pkgconfig)
+install(FILES ${PROJECT_SOURCE_DIR}/src/qcdloop.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(DIRECTORY src/qcdloop DESTINATION include)
-install(TARGETS qcdloop DESTINATION lib)
+install(TARGETS qcdloop DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # enable disable fortran/wrapper (to avoid name conflicts with ql1.x)
 option(ENABLE_FORTRAN_WRAPPER "Enable fortran wrapper" ON)
