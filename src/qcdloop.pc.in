@@ -5,6 +5,6 @@ libdir=@libdir@
 
 Name: nnpdf
 Description: The qcdloop library
-Version: @VERSION@
+Version: @PROJECT_VERSION@
 Cflags: -I@includedir@ -std=c++11
 Libs: -L@libdir@ -lqcdloop
