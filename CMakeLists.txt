@@ -88,6 +88,8 @@ add_library(qcdloop SHARED src/box.cc
 )
 
 target_link_libraries(qcdloop)
+set_target_properties(qcdloop PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(qcdloop PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR})
 install(FILES ${CMAKE_BINARY_DIR}/src/qcdloop-config
   DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
   GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
