@@ -34,9 +34,9 @@ namespace ql
   inline qcomplex Sqrt(qcomplex const& x){ return csqrtq(x); }
 
   // Absolute value
-  inline double  Abs(double const& x)   { return std::fabs(x); }
+  inline double  Abs(double const& x)   { return std::abs(x); }
   inline qdouble Abs(qdouble const& x)  { return fabsq(x);}
-  inline double  Abs(complex const& x)  { return std::fabs(x);}
+  inline double  Abs(complex const& x)  { return std::abs(x);}
   inline qdouble Abs(qcomplex const& x) { return cabsq(x); }
 
   // Complex tools, imag, real and conj.
