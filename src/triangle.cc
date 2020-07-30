@@ -888,7 +888,7 @@ namespace ql
     const TOutput ct = TOutput(this->_pi2o6);
 
     TOutput dilog2;
-    if (Abs(omarg2) < this->_zero)
+    if (Real(omarg2) < this->_zero)
       dilog2 = ct-TOutput(this->ddilog(omarg2))-Log(arg2)*wlog;
     else
       dilog2 = TOutput(this->ddilog(arg2));
