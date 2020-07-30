@@ -46,10 +46,11 @@ configure_file(
 set(QUADMATH_NAMES ${QUADMATH_NAMES} libquadmath.so quadmath)
 find_library(QUADMATH_LIBRARY
   NAMES ${QUADMATH_NAMES}
-  PATHS /usr/lib64/atlas /usr/lib/atlas 
-        /usr/lib64 /usr/lib /usr/local/lib64 
+  PATHS /usr/lib64/atlas /usr/lib/atlas
+        /usr/lib64 /usr/lib /usr/local/lib64
         /usr/local/lib /usr/x86_64-linux-gnu/*
         /usr/lib/gcc/x86_64-linux-gnu/*
+        /usr/lib/gcc/x86_64-redhat-linux/*
 )
 
 if(QUADMATH_LIBRARY)
@@ -105,7 +106,7 @@ if(ENABLE_EXAMPLES)
   add_executable(cache_test examples/cache_test.cc)
   target_link_libraries(cache_test qcdloop ${QUADMATH_LIBRARIES})
   set_target_properties(cache_test PROPERTIES LINK_FLAGS "-Wl,-rpath,./")
-  
+
   add_executable(cmass_test examples/cmass_test.cc)
   target_link_libraries(cmass_test qcdloop ${QUADMATH_LIBRARIES})
   set_target_properties(cmass_test PROPERTIES LINK_FLAGS "-Wl,-rpath,./")
