@@ -217,6 +217,73 @@ namespace ql
     res[2] = this->_czero;
   }
 
+    /*!
+   * Computes the Bubble derivative.
+   * Implementation of the formulae from Eq. (4.25) of A. Denner, arXiv:0709.1075.
+   *
+   * \param res output object res[0,1,2] the coefficients in the Laurent series
+   * \param mu2 is the squre of the scale mu
+   * \param m are the squares of the masses of the internal lines
+   * \param p are the four-momentum squared of the external lines
+   */
+  template<typename TOutput, typename TMass, typename TScale>
+  void Bubble<TOutput,TMass,TScale>::derivative(vector<TOutput> &res,
+                                                const TScale& mu2,
+                                                vector<TMass> const& m,
+                                                vector<TScale> const& p)
+  {
+    if (mu2 < 0)
+      throw RangeError("Bubble::derivative","mu2 is negative!");
+
+    if ((Real(m[0]) < 0 || Real(m[1]) < 0) || (Imag(m[0]) > 0 || Imag(m[1]) > 0))
+      throw RangeError("Bubble::derivative","Real masses must be positive, imag. negative");
+
+    if (res.size() != 3) { res.reserve(3); }
+    std::fill(res.begin(), res.end(), this->_czero);
+
+    if (this->iszero(p[0]))
+    {
+      if (this->iszero(Abs(m[0])) && this->iszero(Abs(m[1])))
+        return;
+      if (this->iszero(Abs(m[0])-Abs(m[1])))
+        res[0] = this->_cone / (6.0 * m[0]);
+    }
+    else
+    {
+      if (this->iszero(Abs(m[0])) && this->iszero(Abs(m[1])))
+        res[0] = - this->_cone / p[0];
+      else if (this->iszero(Min(m[0], m[1])))
+      {
+        TMass msq;
+        if (Abs(m[0]) >= Abs(m[1])) msq = m[0];
+        else msq = m[1];
+
+        if (this->iszero(Abs(p[0] - msq)))
+        {
+          res[1] = - this->_chalf / msq;
+          res[0] = - this->_chalf / msq * this->Lnrat(mu2, msq) - this->_cone / msq;
+        }
+        else
+          res[0] = - (this->_cone + msq / p[0] * this->Lnrat(msq - p[0], msq)) / p[0];
+      }
+      else
+      {
+        const TMass a = Sqrt(m[0] * m[1]);
+        const TMass c = a;
+        const TOutput b = m[0] + m[1] - TMass(p[0]) - this->_ieps;
+        const TOutput root = Sqrt(Pow(b, 2) - this->_cfour*a*c);
+        const TOutput sgn = TOutput(Sign(Real( Conjg(b) * root)));
+        const TOutput q = this->_chalf * (b + sgn*root);
+        const TOutput rm = q / a;
+        const TOutput r = rm;
+        res[0] = - this->_chalf * (m[0] - m[1]) / Pow(p[0], 2) * Log(m[1]/m[0]) +
+            Sqrt(m[0] * m[1]) / Pow(p[0], 2) * (this->_cone / r - r) * Log(r)
+            - (1.0 + (Pow(r, 2) + this->_cone) / (Pow(r, 2) - this->_cone) * Log(r)) / p[0];
+      }
+    }
+    return;
+  }
+
   // explicity tyoename declaration
   template class Bubble<complex,double,double>;
   template class Bubble<complex,complex,double>;
