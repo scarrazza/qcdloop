@@ -55,6 +55,11 @@ extern"C" {
   qcomplex qli2q_(qdouble const& p1, qdouble const& m1, qdouble const& m2, qdouble const& mu2, int const& ep);
   qcomplex qli2qc_(qdouble const& p1, qcomplex const& m1, qcomplex const& m2, qdouble const& mu2, int const& ep);
 
+  complex  qli2p_(double const& p1, double const& m1, double const& m2, double const& mu2, int const& ep);
+  complex  qli2pc_(double const& p1, complex const& m1, complex const& m2, double const& mu2, int const& ep);
+  qcomplex qli2pq_(qdouble const& p1, qdouble const& m1, qdouble const& m2, qdouble const& mu2, int const& ep);
+  qcomplex qli2pqc_(qdouble const& p1, qcomplex const& m1, qcomplex const& m2, qdouble const& mu2, int const& ep);
+
   complex  qli3_(double const& p1, double const& p2, double const& p3, double const& m1, double const& m2, double const& m3, double const& mu2, int const& ep);
   complex  qli3c_(double const& p1, double const& p2, double const& p3, complex const& m1, complex const& m2, complex const& m3, double const& mu2, int const& ep);
   qcomplex qli3q_(qdouble const& p1, qdouble const& p2, qdouble const& p3, qdouble const& m1, qdouble const& m2, qdouble const& m3, qdouble const& mu2, int const& ep);
