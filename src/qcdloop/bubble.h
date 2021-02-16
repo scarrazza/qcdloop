@@ -43,5 +43,8 @@ namespace ql
 
     //! Special configuration I(0;m0,m1)
     void BB5(vector<TOutput> &res, TScale const& mu2, TMass const& m0, TMass const& m1) const;
+
+    //! Computes the Bubble derivative
+    void derivative(vector<TOutput> &res, TScale const& mu2, vector<TMass> const& m, vector<TScale> const& p);
     };
 }

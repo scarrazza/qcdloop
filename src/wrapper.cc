@@ -533,7 +533,7 @@ void qlboxcq_(qcomplex (&out)[3], qdouble const& mu2, qcomplex const& m1, qcompl
     {
       std::cout << e.what() << std::endl;
       exit(-1);
-    }    
+    }
     return r[abs(ep)];
   }
 
@@ -579,6 +579,74 @@ void qlboxcq_(qcomplex (&out)[3], qdouble const& mu2, qcomplex const& m1, qcompl
       mI2cq[1] = m2;
       pI2q[0] = p1;
       bbcq.integral(rq, mu2, mI2cq, pI2q);
+    }
+    catch (std::exception &e)
+    {
+      std::cout << e.what() << std::endl;
+      exit(-1);
+    }
+    return rq[abs(ep)];
+  }
+
+  complex qli2p_(double const& p1, double const& m1, double const& m2, double const& mu2, int const& ep)
+  {
+    try
+    {
+      mI2[0] = m1;
+      mI2[1] = m2;
+      pI2[0] = p1;
+      bb.derivative(r, mu2, mI2, pI2);
+    }
+    catch (std::exception &e)
+    {
+      std::cout << e.what() << std::endl;
+      exit(-1);
+    }
+    return r[abs(ep)];
+  }
+
+  complex qli2pc_(double const& p1, complex const& m1, complex const& m2, double const& mu2, int const& ep)
+  {
+    try
+    {
+      mI2c[0] = m1;
+      mI2c[1] = m2;
+      pI2[0] = p1;
+      bbc.derivative(r, mu2, mI2c, pI2);
+    }
+    catch (std::exception &e)
+    {
+      std::cout << e.what() << std::endl;
+      exit(-1);
+    }
+    return r[abs(ep)];
+  }
+
+  qcomplex qli2pq_(qdouble const& p1, qdouble const& m1, qdouble const& m2, qdouble const& mu2, int const& ep)
+  {
+    try
+    {
+      mI2q[0] = m1;
+      mI2q[1] = m2;
+      pI2q[0] = p1;
+      bbq.derivative(rq, mu2, mI2q, pI2q);
+    }
+    catch (std::exception &e)
+    {
+      std::cout << e.what() << std::endl;
+      exit(-1);
+    }
+    return rq[abs(ep)];
+  }
+
+  qcomplex qli2pqc_(qdouble const& p1, qcomplex const& m1, qcomplex const& m2, qdouble const& mu2, int const& ep)
+  {
+    try
+    {
+      mI2cq[0] = m1;
+      mI2cq[1] = m2;
+      pI2q[0] = p1;
+      bbcq.derivative(rq, mu2, mI2cq, pI2q);
     }
     catch (std::exception &e)
     {
