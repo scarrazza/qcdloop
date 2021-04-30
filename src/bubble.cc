@@ -245,8 +245,14 @@ namespace ql
     {
       if (this->iszero(Abs(m[0])) && this->iszero(Abs(m[1])))
         return;
-      if (this->iszero(Abs(m[0])-Abs(m[1])))
+      else if (this->iszero(Abs(m[0])-Abs(m[1])))
         res[0] = this->_cone / (6.0 * m[0]);
+      else if (this->iszero(m[0]))
+        res[0] = this->_cone / (2.0 * m[1]);
+      else if (this->iszero(m[1]))
+        res[0] = this->_cone / (2.0 * m[0]);
+      else
+        res[0] = (m[0] * m[1] * Log(m[0]/m[1]) + Pow(m[1], 2) / 2.0 - Pow(m[0], 2) /2.0) / Pow(m[1] - m[0], 3);
     }
     else
     {
