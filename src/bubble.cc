@@ -111,7 +111,8 @@ namespace ql
     const TMass sqm1 = Sqrt(m1);
     const TOutput bb = TOutput(m0+m1-s);
     const TOutput rtt= Sqrt(bb*bb - this->_cfour*TOutput(m1*m0));
-    const TOutput x1 = this->_chalf*(bb+Sign(bb)*rtt)/(sqm0*sqm1);
+    const TOutput sgn = Sign(Real(Conjg(bb)*rtt));
+    const TOutput x1 = this->_chalf*(bb+sgn*rtt)/(sqm0*sqm1);
     const TOutput x2 = this->_cone/x1;
     res[0] = this->_ctwo - Log(sqm0*sqm1/mu2) + (m0-m1)/s*Log(sqm1/sqm0) - sqm0*sqm1/s*(x2-x1)*this->cLn(x1, Sign(Real(x1-x2)));
     res[1] = this->_cone;
