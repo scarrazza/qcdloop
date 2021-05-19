@@ -27,3 +27,68 @@ cdef class QCDLoop:
         out = [res[0], res[1], res[2]]
         return out
 
+cdef class TadPole:
+    cdef cpp.TadPole[double complex,double,double] *thisptr
+
+    def __cinit__(self):
+        self.thisptr = new cpp.TadPole[double complex,double,double]()
+
+    def __dealloc__(self):
+        del self.thisptr
+
+    def integral(self, mu2, m, p = []):
+        cdef vector[double complex] res
+        self.thisptr.integral(res,mu2,m,p)
+        out = [res[0], res[1], res[2]]
+        return out
+
+    def integral(self, mu2, m):
+        cdef vector[double complex] res
+        self.thisptr.integral(res,mu2,m,[])
+        out = [res[0], res[1], res[2]]
+        return out
+
+cdef class Bubble:
+    cdef cpp.Bubble[double complex,double,double] *thisptr
+
+    def __cinit__(self):
+        self.thisptr = new cpp.Bubble[double complex,double,double]()
+
+    def __dealloc__(self):
+        del self.thisptr
+
+    def integral(self, mu2, m, p):
+        cdef vector[double complex] res
+        self.thisptr.integral(res,mu2,m,p)
+        out = [res[0], res[1], res[2]]
+        return out
+
+cdef class Triangle:
+    cdef cpp.Triangle[double complex,double,double] *thisptr
+
+    def __cinit__(self):
+        self.thisptr = new cpp.Triangle[double complex,double,double]()
+
+    def __dealloc__(self):
+    del self.thisptr
+
+    def integral(self, mu2, m, p):
+        cdef vector[double complex] res
+        self.thisptr.integral(res,mu2,m,p)
+        out = [res[0], res[1], res[2]]
+	return out
+
+cdef class Box:
+    cdef cpp.Box[double complex,double,double] *thisptr
+
+    def __cinit__(self):
+    self.thisptr = new cpp.Box[double complex,double,double]()
+
+    def __dealloc__(self):
+        del self.thisptr
+
+    def integral(self, mu2, m, p):
+        cdef vector[double complex] res
+        self.thisptr.integral(res,mu2,m,p)
+        out = [res[0], res[1], res[2]]
+        return out
