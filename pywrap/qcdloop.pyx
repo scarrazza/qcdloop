@@ -28,10 +28,10 @@ cdef class QCDLoop:
         return out
 
 cdef class TadPole:
-    cdef cpp.TadPole[double complex,double,double] *thisptr
+    cdef cpp.TadPole[double complex,double complex,double] *thisptr
 
     def __cinit__(self):
-        self.thisptr = new cpp.TadPole[double complex,double,double]()
+        self.thisptr = new cpp.TadPole[double complex,double complex,double]()
 
     def __dealloc__(self):
         del self.thisptr
@@ -49,10 +49,10 @@ cdef class TadPole:
         return out
 
 cdef class Bubble:
-    cdef cpp.Bubble[double complex,double,double] *thisptr
+    cdef cpp.Bubble[double complex,double complex,double] *thisptr
 
     def __cinit__(self):
-        self.thisptr = new cpp.Bubble[double complex,double,double]()
+        self.thisptr = new cpp.Bubble[double complex,double complex,double]()
 
     def __dealloc__(self):
         del self.thisptr
@@ -64,25 +64,25 @@ cdef class Bubble:
         return out
 
 cdef class Triangle:
-    cdef cpp.Triangle[double complex,double,double] *thisptr
+    cdef cpp.Triangle[double complex,double complex,double] *thisptr
 
     def __cinit__(self):
-        self.thisptr = new cpp.Triangle[double complex,double,double]()
+        self.thisptr = new cpp.Triangle[double complex,double complex,double]()
 
     def __dealloc__(self):
-    del self.thisptr
+        del self.thisptr
 
     def integral(self, mu2, m, p):
         cdef vector[double complex] res
         self.thisptr.integral(res,mu2,m,p)
         out = [res[0], res[1], res[2]]
-	return out
+        return out
 
 cdef class Box:
-    cdef cpp.Box[double complex,double,double] *thisptr
+    cdef cpp.Box[double complex,double complex,double] *thisptr
 
     def __cinit__(self):
-    self.thisptr = new cpp.Box[double complex,double,double]()
+        self.thisptr = new cpp.Box[double complex,double complex,double]()
 
     def __dealloc__(self):
         del self.thisptr
