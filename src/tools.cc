@@ -15,7 +15,7 @@ using std::cout;
 using std::endl;
 using std::is_same;
 
-namespace ql {    
+namespace ql {
 
   template<typename TOutput, typename TMass, typename TScale>
   Tools<TOutput,TMass,TScale>::Tools():
@@ -269,8 +269,8 @@ namespace ql {
   template<typename TOutput, typename TMass, typename TScale>
   TOutput Tools<TOutput,TMass,TScale>::fndd(int const& n, TOutput const& x, TScale const& iep) const
   {
-    const int infty = 16;    
-    TOutput res = _czero;    
+    const int infty = 16;
+    TOutput res = _czero;
     if (Abs(x) < _ten)
       {
         if (!iszero(Abs(x-_cone)))
@@ -278,12 +278,12 @@ namespace ql {
 
         for (int j = 0; j <= n; j++)
           res -= Pow(x, n-j)/(j+_one);
-      }    
+      }
     else
-      {        
+      {
         res = cLn(_cone-_cone/x, iep);
         for (int j = n+1; j <= n+infty; j++)
-          res += Pow(x, n-j)/(j+_one);          
+          res += Pow(x, n-j)/(j+_one);
       }
     return res;
   }
@@ -481,18 +481,18 @@ namespace ql {
 
     if (Real(z12) > _half)
       {
-        cspence = ltspence(1, z12, _zero);       
+        cspence = ltspence(1, z12, _zero);
         const int etas = eta(z1, im1, z2, im2, im12);
         if (etas != 0) cspence += TOutput(etas)*cLn(_cone-z12, -im12)*_2ipi;
       }
     else if (Abs(z12) < _eps4)
       {
-        cspence = TOutput(_pi2o6);        
+        cspence = TOutput(_pi2o6);
         if (Abs(z12) > _eps14)
           cspence += -ltspence(0, z12, _zero) + (cLn(z1,im1) + cLn(z2,im2))*z12*(_cone + z12*(_chalf + z12*(_cone/_cthree + z12/_cfour)));
       }
     else
-      cspence = TOutput(_pi2o6) - ltspence(0, z12, _zero) - (cLn(z1, im1) + cLn(z2, im2))*cLn(_cone-z12,_zero);      
+      cspence = TOutput(_pi2o6) - ltspence(0, z12, _zero) - (cLn(z1, im1) + cLn(z2, im2))*cLn(_cone-z12,_zero);
 
     return cspence;
   }
@@ -819,7 +819,7 @@ namespace ql {
       {
         const TOutput arg4 = (y0-_cone)/y0;
         res += extra*cLn(arg4, Sign(Imag(arg4)));
-      }      
+      }
 
     return res;
   }
@@ -1221,30 +1221,38 @@ namespace ql {
     if (iszero(Imag(discr)))
       {
         const TMass sgnb = Sign(Real(b));
-        if (Real(discr) > 0)
-            {
-              const TMass q = -_half*(b+sgnb*Sqrt(discr));
-              if (Real(b) > 0)
-                {
-                  z[0] = TOutput(c/q);
-                  z[1] = TOutput(q/a);
-                }
-              else
-                {
-                  z[0] = TOutput(q/a);
-                  z[1] = TOutput(c/q);
-                }
-            }
-          else
-            {
-              z[1] = -(TOutput(b)+sgnb*Sqrt(TOutput(discr)))/(_ctwo*a);
-              z[0] = Conjg(z[1]);
-              if (Real(b) < 0)
-                {
-                  z[0] = z[1];
-                  z[1] = Conjg(z[0]);
-                }
-            }
+        if (iszero(Real(b)))
+        {
+          z[0] = -(TOutput(b)-Sqrt(TOutput(discr)))/(_ctwo*a);
+          z[1] = -(TOutput(b)+Sqrt(TOutput(discr)))/(_ctwo*a);
+        }
+        else
+        {
+          if (Real(discr) > 0)
+              {
+                const TMass q = -_half*(b+sgnb*Sqrt(discr));
+                if (Real(b) > 0)
+                  {
+                    z[0] = TOutput(c/q);
+                    z[1] = TOutput(q/a);
+                  }
+                else
+                  {
+                    z[0] = TOutput(q/a);
+                    z[1] = TOutput(c/q);
+                  }
+              }
+            else
+              {
+                z[1] = -(TOutput(b)+sgnb*Sqrt(TOutput(discr)))/(_ctwo*a);
+                z[0] = Conjg(z[1]);
+                if (Real(b) < 0)
+                  {
+                    z[0] = z[1];
+                    z[1] = Conjg(z[0]);
+                  }
+              }
+        }
       }
     else
       {
