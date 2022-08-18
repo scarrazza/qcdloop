@@ -11,12 +11,12 @@ jobs:
   compilejobFedora35:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
-    name: CI_on_CentOS8
+    name: CI_on_Fedora35
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Compile
       id: compileindocker
-      uses: ./.github/workflows/centos8
+      uses: ./.github/workflows/fedora35
     - name: Get the output status
       run: exit ${{ steps.compileindocker.outputs.out }}
