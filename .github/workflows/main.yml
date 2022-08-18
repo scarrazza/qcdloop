@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  compilejobCentOS8:
+  compilejobFedora35:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-latest
     name: CI_on_CentOS8
