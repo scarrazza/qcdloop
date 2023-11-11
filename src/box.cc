@@ -894,7 +894,7 @@ namespace ql
     ix[0][3] = Imag(this->_chalf/a*(b-disc));
     ix[1][3] = Imag(this->_chalf/a*(b+disc));
 
-    disc = Sqrt(b*b - this->_cfour*a*c);
+    disc = Sqrt(b*b - this->_cfour*a*c + this->_reps);
     TOutput x[2][4];
     x[0][3] = this->_chalf/a*(b-disc);
     x[1][3] = this->_chalf/a*(b+disc);
