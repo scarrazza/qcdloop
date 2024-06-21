@@ -368,7 +368,7 @@ namespace ql {
     const TMass H = Y+Y-_one;
     const TMass ALFA = H+H;
     TMass B1 = _zero, B2 = _zero, B0 = _zero;
-    for (int i = _C.size(); i >= 0; i--)
+    for (int i = _C.size() - 1; i >= 0; i--)
       {
         B0 = _C[i]+ALFA*B1-B2;
         B2 = B1;
