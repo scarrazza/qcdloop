@@ -4,7 +4,7 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 
-if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
+if [[ $# -eq 0 || -n $( echo $* | grep -E -- "--help|-h" ) ]]; then
     echo
     echo "qcdloop-config: configuration tool for qcdloop"
     echo
@@ -21,23 +21,23 @@ fi
 
 OUT=""
 
-tmp=$( echo "$*" | egrep -- '--\<prefix\>')
+tmp=$( echo "$*" | grep -E -- '--\<prefix\>')
 test -n "$tmp" && OUT="$OUT @prefix@"
 
-tmp=$( echo "$*" | egrep -- '--\<incdir\>')
+tmp=$( echo "$*" | grep -E -- '--\<incdir\>')
 test -n "$tmp" && OUT="$OUT @includedir@"
 
-tmp=$( echo "$*" | egrep -- '--\<cppflags\>')
+tmp=$( echo "$*" | grep -E -- '--\<cppflags\>')
 test -n "$tmp" && OUT="$OUT -I@includedir@ -std=c++11"
 
-tmp=$( echo "$*" | egrep -- '--\<libdir\>')
+tmp=$( echo "$*" | grep -E -- '--\<libdir\>')
 test -n "$tmp" && OUT="$OUT @libdir@"
 
-tmp=$( echo "$*" | egrep -- '--\<ldflags\>')
+tmp=$( echo "$*" | grep -E -- '--\<ldflags\>')
 test -n "$tmp" && OUT="$OUT -L@libdir@ -lqcdloop -lquadmath"
 
 ## Version
-tmp=$( echo "$*" | egrep -- '--\<version\>')
+tmp=$( echo "$*" | grep -E -- '--\<version\>')
 test -n "$tmp" && OUT="$OUT @VERSION@"
 
 echo $OUT
