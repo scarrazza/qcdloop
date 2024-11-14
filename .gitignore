@@ -52,3 +52,6 @@ src/qcdloop/stamp-h1
 examples/cache_test
 examples/cmass_test
 examples/trigger_test
+# pixi environments
+.pixi
+*.egg-info

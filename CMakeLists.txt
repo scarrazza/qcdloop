@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.12...3.31)
 
 # Disable the use of RPATHS - we probably are not
 # that interested in relocatable binaries and it
@@ -20,37 +20,37 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(VERSION 2.0.10)
-include(CheckCXXCompilerFlag)
-if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-  set(CXX_FLAGS_TO_CHECK "-Wall -Wextra -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fstack-protector-strong -O2 -pipe -fext-numeric-literals")
-  set(CXX_FLAGS_DEBUG_TO_CHECK "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address ${CMAKE_CXX_FLAGS_TO_CHECK}")
-  set(CMAKE_EXE_LINKER_FLAGS_DEBUG "-fsanitize=address")
+
+# Set default CXXFLAGS but allow for environment override
+# c.f. https://cmake.org/cmake/help/v3.31/envvar/CXXFLAGS.html
+if (NOT CMAKE_CXX_FLAGS)
+  # c.f. https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_COMPILER_ID.html
+  if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
+    set(CMAKE_CXX_FLAGS "-Wall -Wextra -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fstack-protector-strong -O2 -pipe -fext-numeric-literals")
+  else()
+    set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+  endif()
 else()
-  set(CXX_FLAGS_TO_CHECK "-Wall -Wextra")
-  set(CXX_FLAGS_DEBUG_TO_CHECK "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address ${CMAKE_CXX_FLAGS_TO_CHECK}")
+  if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
+    # Ensure -fext-numeric-literals is in CMAKE_CXX_FLAGS
+    string(FIND "${CMAKE_CXX_FLAGS}" "-fext-numeric-literals" _found_ext_numeric_literals)
+    if (_found_ext_numeric_literals EQUAL -1)
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fext-numeric-literals" CACHE STRING "Update environment CXXFLAGS" FORCE)
+    endif()
+  endif()
 endif()
-set(CXX_FLAGS_PASSED )
-set(CXX_FLAGS_DEBUG_PASSED )
-foreach(fl ${CXX_FLAGS_TO_CHECK})
-  CHECK_CXX_COMPILER_FLAG(${fl} COMPILER_SUPPORTS_${fl})
-  if(COMPILER_SUPPORTS_${fl})
-    set(CXX_FLAGS_PASSED "${CXX_FLAGS_PASSED} ${fl}" )
-  endif()
-endforeach()
-foreach(fl ${CXX_FLAGS_DEBUG_TO_CHECK})
-  CHECK_CXX_COMPILER_FLAG(${fl} COMPILER_SUPPORTS_${fl})
-  if(COMPILER_SUPPORTS_${fl})
-    set(CXX_FLAGS_DEBUG_PASSED "${CXX_FLAGS_DEBUG_PASSED} ${fl}" )
-  endif()
-endforeach()
-set(CMAKE_CXX_FLAGS ${CXX_FLAGS_PASSED})
-set(CMAKE_CXX_FLAGS_DEBUG ${CXX_FLAGS_DEBUG_PASSED})
-message(STATUS "CMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}")
-message(STATUS "CMAKE_CXX_FLAGS_DEBUG=${CMAKE_CXX_FLAGS_DEBUG}")
+
+# TODO: QCDLoop is currently only well tested on GNU, so other compiler
+# and linker defaults should be added as they become known
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address ${CMAKE_CXX_FLAGS}" CACHE STRING "debug CXXFLAGS" FORCE)
+  set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fsanitize=address" CACHE STRING "debug linker flags" FORCE)
+endif()
+
 set(prefix ${CMAKE_INSTALL_PREFIX})
 set(exec_prefix ${CMAKE_INSTALL_PREFIX})
-set(includedir "${CMAKE_INSTALL_INCLUDE_DIR}")
-set(libdir "${CMAKE_INSTALL_LIBDIR}")
+set(includedir ${CMAKE_INSTALL_INCLUDEDIR})
+set(libdir ${CMAKE_INSTALL_LIBDIR})
 
 configure_file(
   "${PROJECT_SOURCE_DIR}/src/qcdloop/config.h.in"
@@ -75,6 +75,7 @@ find_library(QUADMATH_LIBRARY
         /usr/local/lib /usr/x86_64-linux-gnu/*
         /usr/lib/gcc/x86_64-linux-gnu/*
         /usr/lib/gcc/x86_64-redhat-linux/*
+        "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}"
 )
 
 if(QUADMATH_LIBRARY)
