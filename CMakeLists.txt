@@ -75,6 +75,7 @@ find_library(QUADMATH_LIBRARY
         /usr/local/lib /usr/x86_64-linux-gnu/*
         /usr/lib/gcc/x86_64-linux-gnu/*
         /usr/lib/gcc/x86_64-redhat-linux/*
+        /usr/lib/gcc/x86_64-pc-linux-gnu/*
         "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}"
 )
 
