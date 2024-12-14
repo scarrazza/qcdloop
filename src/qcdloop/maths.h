@@ -17,41 +17,74 @@ namespace ql
 {
   // Logarithms
   inline double   Log(double const& x)   { return std::log(x); }
+#ifdef __x86_64__
   inline qdouble  Log(qdouble const& x)  { return logq(x); }
-  inline complex  Log(complex const& x)  { return std::log(x); }
   inline qcomplex Log(qcomplex const& x) { return clogq(x); }
+#else
+  inline qdouble  Log(qdouble const& x)  { return std::log(x); }
+  inline qcomplex Log(qcomplex const& x) { return std::logq(x); }
+#endif
+  inline complex  Log(complex const& x)  { return std::log(x); }
 
   // Power
   inline double   Pow(double const& x, int const& a)   { return std::pow(x, a); }
+#ifdef __x86_64__
   inline qdouble  Pow(qdouble const& x, int const& a)  { return powq(x,a); }
-  inline complex  Pow(complex const& x, int const& a) { return std::pow(x,a); }
   inline qcomplex Pow(qcomplex const& x, int const& a){ return cpowq(x,a); }
+#else
+  inline qdouble  Pow(qdouble const& x, int const& a)  { return std::pow(x,a); }
+  inline qcomplex Pow(qcomplex const& x, int const& a){ return std::pow(x,a); }
+#endif
+  inline complex  Pow(complex const& x, int const& a) { return std::pow(x,a); }
 
   // Root
   inline double   Sqrt(double const& x)  { return std::sqrt(x); }
+#ifdef __x86_64__
   inline qdouble  Sqrt(qdouble const& x) { return sqrtq(x); }
-  inline complex  Sqrt(complex const& x) { return std::sqrt(x); }
   inline qcomplex Sqrt(qcomplex const& x){ return csqrtq(x); }
+#else
+  inline qdouble  Sqrt(qdouble const& x) { return std::sqrt(x); }
+  inline qcomplex Sqrt(qcomplex const& x){ return std::sqrt(x); }
+#endif
+  inline complex  Sqrt(complex const& x) { return std::sqrt(x); }
 
   // Absolute value
   inline double  Abs(double const& x)   { return std::abs(x); }
+#ifdef __x86_64__
   inline qdouble Abs(qdouble const& x)  { return fabsq(x);}
-  inline double  Abs(complex const& x)  { return std::abs(x);}
   inline qdouble Abs(qcomplex const& x) { return cabsq(x); }
+#else
+  inline qdouble Abs(qdouble const& x)  { return std::abs(x);}
+  inline qdouble Abs(qcomplex const& x) { return std::abs(x); }
+#endif
+  inline double  Abs(complex const& x)  { return std::abs(x);}
 
   // Complex tools, imag, real and conj.
   inline double  Imag(double const& x)  { UNUSED(x); return 0; }
   inline qdouble Imag(qdouble const& x) { UNUSED(x); return qdouble(0); }
   inline double  Imag(complex const& x) { return x.imag(); }
+#ifdef __x86_64__
   inline qdouble Imag(qcomplex const& x){ return cimagq(x);}
+#else
+  inline qdouble Imag(qcomplex const& x){ return std::imag(x);}
+#endif
 
   inline double  Real(double const& x) { return x; }
   inline qdouble Real(qdouble const& x) { return x; }
   inline double  Real(complex const& x) { return x.real(); }
+#ifdef __x86_64__
   inline qdouble Real(qcomplex const& x) { return crealq(x); }
+#else
+  inline qdouble Real(qcomplex const& x) { return std::real(x); }
+#endif
 
   inline complex  Conjg(complex const& x) { return std::conj(x); }
+#ifdef __x86_64__
   inline qcomplex Conjg(qcomplex const& x){ return conjq(x); }
+#else
+  inline qcomplex Conjg(qcomplex const& x){ return std::conj(x); }
+#endif
+
 
   // Comparison and sign operations
   inline int Sign(double const& x) { return (double(0) < x) - (x < double(0)); }

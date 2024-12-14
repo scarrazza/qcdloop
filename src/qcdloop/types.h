@@ -12,14 +12,15 @@ extern "C" { // for gcc4.7 compatibility
 #include <quadmath.h>
 }
 #else
-//#endif
-//#ifdef __aarch64__
+#endif
+#ifdef __aarch64__
 #include <stdlib.h>
 #include <complex.h>
 #include <tgmath.h>
 #include <float.h>
 typedef long double __float128;
 using __complex128 = long double _Complex  ;
+/*
 #define acos std::acos
 #define acosh std::acoshl 
 #define asin std::asin
@@ -82,7 +83,7 @@ using __complex128 = long double _Complex  ;
 #define csqrtq std::sqrt
 #define ctanq std::tan
 #define ctanhq std::tanh
-#define cpowq std::powl
+#define cpowq std::powl*/
 #endif
 #include <complex>
 
