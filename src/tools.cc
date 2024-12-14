@@ -20,9 +20,10 @@ namespace ql {
   template<typename TOutput, typename TMass, typename TScale>
   Tools<TOutput,TMass,TScale>::Tools():
     _qlonshellcutoff(is_same<TScale,double>::value ? 1e-10 : 1e-20q),
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(__i386__)
     _pi(is_same<TScale,double>::value ? M_PI : M_PIq),
-#else
+#endif
+#if defined(__aarch64__)
     _pi(is_same<TScale,double>::value ? M_PI : M_PIl),
 #endif
     _pi2   (_pi*_pi),
