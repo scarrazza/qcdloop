@@ -19,6 +19,69 @@ extern "C" { // for gcc4.7 compatibility
 #include <float.h>
 typedef long double __float128;
 using __complex128 = long double _Complex  ;
+#define acosq acosl
+#define acoshq acoshl 
+#define asinq asinl
+#define asinhq asinhl 
+#define atanq atanl
+#define atanhq atanhl 
+#define cbrtq cbrtl
+#define ceilq ceill
+#define coshq coshl
+#define cosq cosl
+#define erfq erfl
+#define erfcq erfcl
+#define expq expl
+#define expm1q expm1l
+#define fabsq fabsl
+#define floorq floorl
+#define lgammaq lgammal
+#define logq logl
+#define log10q log10l
+#define log2q log2l
+#define log1pq log1pl
+#define nearbyintq nearbyintl
+#define rintq rintl
+#define roundq roundl
+#define sinhq sinhl
+#define sinq sinl
+#define sqrtq sqrtl
+#define tanq tanl
+#define tanhq tanhl
+#define tgammaq tgammal
+#define truncq truncl
+
+#define atan2q atan2l
+#define copysignq copysignl
+#define hypotq hypotl
+#define ldexpq ldexpl
+#define nextafterq nextafterl
+#define powq powl
+#define remainderq remainderl
+
+
+#define cabsq cabsl
+#define crealq creall
+#define cimagq cimagl
+#define cargq cargl
+#define conjq conjl
+#define cacosq cacosl
+#define cacoshq cacoshl
+#define casinq casinl
+#define casinhq casinhl
+#define catanq catanl
+#define catanhq catanhl
+#define ccosq ccosl
+#define ccoshq ccoshl
+#define cexpq cexpl
+#define clogq clogl
+#define clog10q clog10l
+#define csinq csinl
+#define csinhq csinhl
+#define csqrtq csqrtl
+#define ctanq ctanl
+#define ctanhq ctanhl
+#define cpowq cpowl
 #endif
 #include <complex>
 

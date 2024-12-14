@@ -13,8 +13,14 @@ namespace std
   {
      char buf[200];
      std::ostringstream format;
+#ifdef __x86_64__
      format << "%." << (std::min)(190L, out.precision()) << "Qe";
      quadmath_snprintf(buf, 200, format.str().c_str(), f);
+#endif
+#ifdef __aarch64__
+     format << "%." << (std::min)(190L, out.precision()) << "Le";
+     snprintf(buf, 200, format.str().c_str(), f);
+#endif
      out << buf;
      return out;
    }
