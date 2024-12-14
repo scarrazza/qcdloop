@@ -20,70 +20,15 @@ extern "C" { // for gcc4.7 compatibility
 #include <float.h>
 typedef long double __float128;
 using __complex128 = long double _Complex  ;
-/*
-#define acos std::acos
-#define acosh std::acoshl 
-#define asin std::asin
-#define asinh std::asinhl 
-#define atan std::atan
-#define atanh std::atanhl 
-#define cbrt std::cbrt
-#define ceil std::ceil
-#define cosh std::cosh
-#define cos std::cos
-#define erf std::erf
-#define erfc std::erfc
-#define exp std::exp
-#define expm1 std::expm1
-#define fabs std::fabs
-#define floor std::floor
-#define lgamma std::lgamma
-#define log std::log
-#define log10 std::log10
-#define log2 std::log2
-#define log1p std::log1p
-#define nearbyint std::nearbyint
-#define rint std::rint
-#define round std::round
-#define sinh std::sinh
-#define sin std::sin
-#define sqrt std::sqrt
-#define tan std::tan
-#define tanh std::tanh
-#define tgamma std::tgamma
-#define trunc std::trunc
-
-#define atan2 std::atan2
-#define copysign std::copysign
-#define hypot std::hypot
-#define ldexp std::ldexp
-#define nextafter std::nextafter
-#define pow std::pow
-#define remainder std::remainder
-
-
-#define cabsq std::abs
-#define crealq std::real
-#define cimagq std::imag
-#define cargq std::arg
-#define conjq std::conj
-#define cacosq std::acos
-#define cacoshq std::acosh
-#define casinq std::asin
-#define casinhq std::asinh
-#define catanq std::atan
-#define catanhq std::atanh
-#define ccosq std::cos
-#define ccoshq std::cosh
-#define cexpq std::exp
-#define clogq std::log
-#define clog10q std::log10
-#define csinq std::sin
-#define csinhq std::sinh
-#define csqrtq std::sqrt
-#define ctanq std::tan
-#define ctanhq std::tanh
-#define cpowq std::powl*/
+extern "C" {
+__complex128 conjl(__complex128);
+__float128 cimagl(__complex128);
+__float128 creall(__complex128);
+__complex128 csqrtl(__complex128);
+__complex128 clogl(__complex128);
+__float128 cabsl(__complex128);
+__complex128 cpowl(__complex128,__complex128);
+}
 #endif
 #include <complex>
 
@@ -104,8 +49,11 @@ namespace ql
 
 namespace std
 {
+
+#ifdef __x86_64__
   //! implementation of operator<< for qdouble
   ostream& operator<<(std::ostream& out, ql::qdouble f);
+#endif
 
   //! implementation of operator<< for qcomplex
   ostream& operator<<(std::ostream& out, ql::qcomplex f);

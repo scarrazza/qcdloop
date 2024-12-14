@@ -9,18 +9,13 @@
 
 namespace std
 {
+#ifdef __x86_64__
   ostream& operator<<(std::ostream& out, ql::qdouble f)
   {
      char buf[200];
      std::ostringstream format;
-#ifdef __x86_64__
      format << "%." << (std::min)(190L, out.precision()) << "Qe";
      quadmath_snprintf(buf, 200, format.str().c_str(), f);
-#endif
-#ifdef __aarch64__
-     format << "%." << (std::min)(190L, out.precision()) << "Le";
-     snprintf(buf, 200, format.str().c_str(), f);
-#endif
      out << buf;
      return out;
    }
@@ -30,6 +25,13 @@ namespace std
      out << "(" << crealq(f) << "," << cimagq(f) << ")";
      return out;
   }
+#else
+  ostream& operator<<(std::ostream& out, ql::qcomplex f)
+  {
+     out << "(" << creall(f) << "," << cimagl(f) << ")";
+     return out;
+  }
+#endif
  
   ostream& operator<<(std::ostream& os, ql::Code code) 
   {      

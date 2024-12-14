@@ -8,7 +8,11 @@
 #pragma once
 
 #include "types.h"
-
+#include <stdlib.h>
+#include <complex.h>
+#include <tgmath.h>
+#include <float.h>
+#include <cmath>
 /*!
  * Some basic math functions with inline (performance)
  * for double and quadruple precision.
@@ -22,7 +26,7 @@ namespace ql
   inline qcomplex Log(qcomplex const& x) { return clogq(x); }
 #else
   inline qdouble  Log(qdouble const& x)  { return std::log(x); }
-  inline qcomplex Log(qcomplex const& x) { return std::log(x); }
+  inline qcomplex Log(qcomplex const& x) { return clogl(x); }
 #endif
   inline complex  Log(complex const& x)  { return std::log(x); }
 
@@ -66,7 +70,7 @@ namespace ql
 #ifdef __x86_64__
   inline qdouble Imag(qcomplex const& x){ return cimagq(x);}
 #else
-  inline qdouble Imag(qcomplex const& x){ return std::imag(x);}
+  inline qdouble Imag(qcomplex const& x){ return cimagl(x);}
 #endif
 
   inline double  Real(double const& x) { return x; }
@@ -82,7 +86,7 @@ namespace ql
 #ifdef __x86_64__
   inline qcomplex Conjg(qcomplex const& x){ return conjq(x); }
 #else
-  inline qcomplex Conjg(qcomplex const& x){ return std::conj(x); }
+  inline qcomplex Conjg(qcomplex const& x){ return conjl(x); }
 #endif
 
 

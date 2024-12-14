@@ -17,6 +17,7 @@ namespace std {
     seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
   }
 
+#ifdef __x86_64__
   template <>
   struct hash<ql::qdouble> : public __hash_base<size_t, ql::qdouble>
   {
@@ -25,6 +26,7 @@ namespace std {
       return x != 0.0q ? std::_Hash_impl::hash(x) : 0;
     }
   };
+#endif
 
   template <> struct hash<ql::complex> : public __hash_base<size_t, ql::complex>
   {
