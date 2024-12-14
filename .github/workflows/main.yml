@@ -41,6 +41,8 @@ jobs:
         image: arm64v8/rockylinux:9
         options: -v ${{ github.workspace }}:/work --platform=linux/arm64/v8
         run: |
+          set -e
+          set -x
           dnf -y install  gcc gcc-c++ gcc-gfortran make which cmake cmake-data cmake-filesystem 
           cd work
           pwd 
