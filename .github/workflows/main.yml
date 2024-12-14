@@ -20,3 +20,29 @@ jobs:
       uses: ./.github/workflows/fedora35
     - name: Get the output status
       run: exit ${{ steps.compileindocker.outputs.out }}
+
+
+  compilejobRocky9_ARM:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    name: Rocky9aarch64_ARM
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: QEMU
+      run: |
+           set -x
+           sudo apt update
+           sudo  apt install --yes binfmt-support qemu-user-static wget
+    - name: Compile_with_arm
+      continue-on-error: true     
+      uses: addnab/docker-run-action@v3
+      with:
+        image: arm64v8/rockylinux:9
+        options: -v ${{ github.workspace }}:/work --platform=linux/arm64/v8
+        run: |
+          dnf -y install epel-release wget 
+          dnf -y install  gcc gcc-c++ gcc-gfortran make which cmake cmake-data cmake-filesystem 
+          cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/INSTALL
+          cmake --build BUILD
+          cmake --install BUILD

@@ -66,7 +66,7 @@ configure_file(
   "${PROJECT_SOURCE_DIR}/src/qcdloop.pc.in"
   "${PROJECT_SOURCE_DIR}/src/qcdloop.pc"
   )
-
+IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
 set(QUADMATH_NAMES ${QUADMATH_NAMES} libquadmath.so quadmath)
 find_library(QUADMATH_LIBRARY
   NAMES ${QUADMATH_NAMES}
@@ -95,7 +95,7 @@ else(QUADMATH_FOUND)
     message(FATAL_ERROR "Could not find QuadMath")
   endif(QUADMATH_FIND_REQUIRED)
 endif(QUADMATH_FOUND)
-
+endif()
 # libqcdloop configuration
 include_directories(src/qcdloop src)
 FILE(GLOB_RECURSE Headers "src/qcdloop/*.h")
