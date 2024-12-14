@@ -11,8 +11,9 @@
 extern "C" { // for gcc4.7 compatibility
 #include <quadmath.h>
 }
-#endif
-#ifdef __aarch64__
+#else
+//#endif
+//#ifdef __aarch64__
 #include <stdlib.h>
 #include <complex.h>
 #include <tgmath.h>
