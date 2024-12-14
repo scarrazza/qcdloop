@@ -22,7 +22,7 @@ namespace ql
   inline qcomplex Log(qcomplex const& x) { return clogq(x); }
 #else
   inline qdouble  Log(qdouble const& x)  { return std::log(x); }
-  inline qcomplex Log(qcomplex const& x) { return std::logq(x); }
+  inline qcomplex Log(qcomplex const& x) { return std::log(x); }
 #endif
   inline complex  Log(complex const& x)  { return std::log(x); }
 
@@ -33,7 +33,7 @@ namespace ql
   inline qcomplex Pow(qcomplex const& x, int const& a){ return cpowq(x,a); }
 #else
   inline qdouble  Pow(qdouble const& x, int const& a)  { return std::pow(x,a); }
-  inline qcomplex Pow(qcomplex const& x, int const& a){ return std::pow(x,a); }
+  inline qcomplex Pow(qcomplex const& x, int const& a){ return cpowl(x,a); }
 #endif
   inline complex  Pow(complex const& x, int const& a) { return std::pow(x,a); }
 
@@ -44,7 +44,7 @@ namespace ql
   inline qcomplex Sqrt(qcomplex const& x){ return csqrtq(x); }
 #else
   inline qdouble  Sqrt(qdouble const& x) { return std::sqrt(x); }
-  inline qcomplex Sqrt(qcomplex const& x){ return std::sqrt(x); }
+  inline qcomplex Sqrt(qcomplex const& x){ return csqrtl(x); }
 #endif
   inline complex  Sqrt(complex const& x) { return std::sqrt(x); }
 
@@ -55,7 +55,7 @@ namespace ql
   inline qdouble Abs(qcomplex const& x) { return cabsq(x); }
 #else
   inline qdouble Abs(qdouble const& x)  { return std::abs(x);}
-  inline qdouble Abs(qcomplex const& x) { return std::abs(x); }
+  inline qdouble Abs(qcomplex const& x) { return cabsl(x); }
 #endif
   inline double  Abs(complex const& x)  { return std::abs(x);}
 
@@ -75,7 +75,7 @@ namespace ql
 #ifdef __x86_64__
   inline qdouble Real(qcomplex const& x) { return crealq(x); }
 #else
-  inline qdouble Real(qcomplex const& x) { return std::real(x); }
+  inline qdouble Real(qcomplex const& x) { return creall(x); }
 #endif
 
   inline complex  Conjg(complex const& x) { return std::conj(x); }
