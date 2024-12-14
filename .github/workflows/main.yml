@@ -41,8 +41,10 @@ jobs:
         image: arm64v8/rockylinux:9
         options: -v ${{ github.workspace }}:/work --platform=linux/arm64/v8
         run: |
-          dnf -y install epel-release wget 
           dnf -y install  gcc gcc-c++ gcc-gfortran make which cmake cmake-data cmake-filesystem 
+          cd work
+          pwd 
+          ls
           cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/INSTALL
           cmake --build BUILD
           cmake --install BUILD
