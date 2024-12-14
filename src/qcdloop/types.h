@@ -7,9 +7,19 @@
 
 #pragma once
 
+#ifdef __x86_64__
 extern "C" { // for gcc4.7 compatibility
 #include <quadmath.h>
 }
+#endif
+#ifdef __aarch64__
+#include <stdlib.h>
+#include <complex.h>
+#include <tgmath.h>
+#include <float.h>
+typedef long double __float128;
+using __complex128 = long double _Complex  ;
+#endif
 #include <complex>
 
 #define UNUSED(expr) (void)(expr)
