@@ -19,7 +19,7 @@ include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(VERSION 2.0.11)
+set(VERSION 2.1.0)
 
 # Set default CXXFLAGS but allow for environment override
 # c.f. https://cmake.org/cmake/help/v3.31/envvar/CXXFLAGS.html
