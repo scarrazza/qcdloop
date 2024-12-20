@@ -9,6 +9,7 @@
 
 namespace std
 {
+#if defined(__x86_64__) || defined(__i386__)
   ostream& operator<<(std::ostream& out, ql::qdouble f)
   {
      char buf[200];
@@ -24,6 +25,14 @@ namespace std
      out << "(" << crealq(f) << "," << cimagq(f) << ")";
      return out;
   }
+#endif
+#if defined(__aarch64__)
+  ostream& operator<<(std::ostream& out, ql::qcomplex f)
+  {
+     out << "(" << creall(f) << "," << cimagl(f) << ")";
+     return out;
+  }
+#endif
  
   ostream& operator<<(std::ostream& os, ql::Code code) 
   {      

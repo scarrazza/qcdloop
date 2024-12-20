@@ -7,9 +7,28 @@
 
 #pragma once
 
+#if defined(__x86_64__) || defined(__i386__)
 extern "C" { // for gcc4.7 compatibility
 #include <quadmath.h>
 }
+#endif
+#if defined(__aarch64__)
+#include <stdlib.h>
+#include <complex.h>
+#include <tgmath.h>
+#include <float.h>
+using __float128 = long double;
+using __complex128 = long double _Complex;
+extern "C" {
+__complex128 conjl(__complex128);
+__float128 cimagl(__complex128);
+__float128 creall(__complex128);
+__complex128 csqrtl(__complex128);
+__complex128 clogl(__complex128);
+__float128 cabsl(__complex128);
+__complex128 cpowl(__complex128,__complex128);
+}
+#endif
 #include <complex>
 
 #define UNUSED(expr) (void)(expr)
@@ -29,8 +48,11 @@ namespace ql
 
 namespace std
 {
+
+#if defined(__x86_64__) || defined(__i386__)
   //! implementation of operator<< for qdouble
   ostream& operator<<(std::ostream& out, ql::qdouble f);
+#endif
 
   //! implementation of operator<< for qcomplex
   ostream& operator<<(std::ostream& out, ql::qcomplex f);
