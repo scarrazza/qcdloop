@@ -21,7 +21,7 @@ namespace ql
 {
   // Logarithms
   inline double   Log(double const& x)   { return std::log(x); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qdouble  Log(qdouble const& x)  { return logq(x); }
   inline qcomplex Log(qcomplex const& x) { return clogq(x); }
 #endif
@@ -33,7 +33,7 @@ namespace ql
 
   // Power
   inline double   Pow(double const& x, int const& a)   { return std::pow(x, a); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qdouble  Pow(qdouble const& x, int const& a)  { return powq(x,a); }
   inline qcomplex Pow(qcomplex const& x, int const& a){ return cpowq(x,a); }
 #endif
@@ -45,7 +45,7 @@ namespace ql
 
   // Root
   inline double   Sqrt(double const& x)  { return std::sqrt(x); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qdouble  Sqrt(qdouble const& x) { return sqrtq(x); }
   inline qcomplex Sqrt(qcomplex const& x){ return csqrtq(x); }
 #endif
@@ -57,7 +57,7 @@ namespace ql
 
   // Absolute value
   inline double  Abs(double const& x)   { return std::abs(x); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qdouble Abs(qdouble const& x)  { return fabsq(x);}
   inline qdouble Abs(qcomplex const& x) { return cabsq(x); }
 #endif
@@ -71,7 +71,7 @@ namespace ql
   inline double  Imag(double const& x)  { UNUSED(x); return 0; }
   inline qdouble Imag(qdouble const& x) { UNUSED(x); return qdouble(0); }
   inline double  Imag(complex const& x) { return x.imag(); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qdouble Imag(qcomplex const& x){ return cimagq(x);}
 #endif
 #if defined(__aarch64__)
@@ -81,7 +81,7 @@ namespace ql
   inline double  Real(double const& x) { return x; }
   inline qdouble Real(qdouble const& x) { return x; }
   inline double  Real(complex const& x) { return x.real(); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qdouble Real(qcomplex const& x) { return crealq(x); }
 #endif
 #if defined(__aarch64__)
@@ -89,7 +89,7 @@ namespace ql
 #endif
 
   inline complex  Conjg(complex const& x) { return std::conj(x); }
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   inline qcomplex Conjg(qcomplex const& x){ return conjq(x); }
 #endif
 #if defined(__aarch64__)

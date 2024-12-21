@@ -17,7 +17,7 @@ namespace std {
     seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
   }
 
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   template <>
   struct hash<ql::qdouble> : public __hash_base<size_t, ql::qdouble>
   {
