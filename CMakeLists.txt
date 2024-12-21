@@ -66,7 +66,9 @@ configure_file(
   "${PROJECT_SOURCE_DIR}/src/qcdloop.pc.in"
   "${PROJECT_SOURCE_DIR}/src/qcdloop.pc"
   )
-IF(${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
+# Only enable quadmath for non-aarch64 as aarch64 supports float128 and so
+# doesn't have libquadmath
+IF(NOT ${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
 set(QUADMATH_NAMES ${QUADMATH_NAMES} libquadmath.so quadmath)
 find_library(QUADMATH_LIBRARY
   NAMES ${QUADMATH_NAMES}

@@ -9,7 +9,7 @@
 
 namespace std
 {
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   ostream& operator<<(std::ostream& out, ql::qdouble f)
   {
      char buf[200];

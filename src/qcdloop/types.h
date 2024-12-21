@@ -7,7 +7,7 @@
 
 #pragma once
 
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
 extern "C" { // for gcc4.7 compatibility
 #include <quadmath.h>
 }
@@ -49,7 +49,7 @@ namespace ql
 namespace std
 {
 
-#if defined(__x86_64__) || defined(__i386__)
+#if defined(__x86_64__) || defined(__i386__) || defined(__PPC64__) || defined(__ppc64__) || defined(_ARCH_PPC64)
   //! implementation of operator<< for qdouble
   ostream& operator<<(std::ostream& out, ql::qdouble f);
 #endif
