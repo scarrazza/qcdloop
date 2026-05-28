@@ -53,6 +53,7 @@ C++11 and `quadmath` features (e.g. `gcc >= 5`).
 Other qcdloop cmake options are:
 - `ENABLE_EXAMPLES`, build examples in C++, default `OFF`.
 - `ENABLE_FORTRAN_WRAPPER`, include fortran wrapper in the library, default `ON`.
+- `ENABLE_STATIC_LIBRARY`, build `libqcdloop.a` in addition to the shared library, default `OFF`.
 
 The fortran wrapper follows the previous syntax in `qcdloop`, see details in table 2 of https://arxiv.org/pdf/1605.03181.pdf.
 
