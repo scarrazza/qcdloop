@@ -99,18 +99,29 @@ endif()
 # libqcdloop configuration
 include_directories(src/qcdloop src)
 FILE(GLOB_RECURSE Headers "src/qcdloop/*.h")
-add_library(qcdloop SHARED src/box.cc
-                         src/bubble.cc
-                         src/cache.cc
-                         src/qcdloop.cc
-                         src/tadpole.cc
-                         src/tools.cc
-                         src/topology.cc
-                         src/triangle.cc
-                         src/types.cc
-                         src/wrapper.cc
-                         ${Headers}
+option(ENABLE_STATIC_LIBRARY "Build static libqcdloop.a in addition to the shared library" OFF)
+set(QCDLOOP_SOURCES src/box.cc
+                    src/bubble.cc
+                    src/cache.cc
+                    src/qcdloop.cc
+                    src/tadpole.cc
+                    src/tools.cc
+                    src/topology.cc
+                    src/triangle.cc
+                    src/types.cc
+                    src/wrapper.cc
+                    ${Headers}
 )
+
+add_library(qcdloop SHARED ${QCDLOOP_SOURCES})
+
+set(QCDLOOP_INSTALL_TARGETS qcdloop)
+if(ENABLE_STATIC_LIBRARY)
+  add_library(qcdloop_static STATIC ${QCDLOOP_SOURCES})
+  set_target_properties(qcdloop_static PROPERTIES OUTPUT_NAME qcdloop)
+  target_link_libraries(qcdloop_static ${QUADMATH_LIBRARY})
+  list(APPEND QCDLOOP_INSTALL_TARGETS qcdloop_static)
+endif()
 
 target_link_libraries(qcdloop ${QUADMATH_LIBRARY})
 install(FILES ${CMAKE_BINARY_DIR}/src/qcdloop-config
@@ -118,7 +129,10 @@ install(FILES ${CMAKE_BINARY_DIR}/src/qcdloop-config
   GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 install(FILES ${PROJECT_SOURCE_DIR}/src/qcdloop.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 install(DIRECTORY src/qcdloop DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(TARGETS qcdloop DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS ${QCDLOOP_INSTALL_TARGETS}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 # enable disable fortran/wrapper (to avoid name conflicts with ql1.x)
 option(ENABLE_FORTRAN_WRAPPER "Enable fortran wrapper" ON)
